@@ -1,11 +1,10 @@
-package com.banking.app;
+package com.banking.app.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,28 +26,23 @@ public class Payee {
     private String NickName;
     @Column
     private int AccountNumber;
-//	@Column
-//	private int userid;
+
 
     @JsonBackReference
     @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     @JoinColumn(name = "userid")
     private Account account;
 
-    //	@ManyToOne(fetch = FetchType.LAZY)
-//	private Account account;
-//
     public Payee() {
 
     }
 
-    public Payee(int payee_id, String FirstName, String LastName, String NickName, int AccountNumber, int userid) {
+    public Payee(int payee_id, String FirstName, String LastName, String NickName, int AccountNumber) {
         super();
         this.payee_id = payee_id;
         this.FirstName = FirstName;
         this.LastName = LastName;
         this.AccountNumber = AccountNumber;
-        this.userid = userid;
     }
 
     public int getPayee_id() {
