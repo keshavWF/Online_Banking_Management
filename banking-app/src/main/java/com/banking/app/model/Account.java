@@ -1,26 +1,38 @@
-package com.banking.app.model;
+package com.banking.app;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
 
 @Entity
-@Table
+@Table(name = "account")
 public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int acc_number;
 	@Column
 	private double acc_balance;
-	@Column
+	@Column(name = "userid")
 	private int userid;
 	@Column
 	private String acc_type;
-	
+
+	@JsonManagedReference
+	@OneToMany(mappedBy = "account",
+			cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+					CascadeType.DETACH, CascadeType.REFRESH})
+	private List<Payee> payees;
+	//
 	public Account() {
-		
+
 	}
 
 	public Account(double acc_balance, int userid, String acc_type) {
@@ -61,6 +73,6 @@ public class Account {
 	public void setAcc_type(String acc_type) {
 		this.acc_type = acc_type;
 	}
-	
-	
+
+
 }
