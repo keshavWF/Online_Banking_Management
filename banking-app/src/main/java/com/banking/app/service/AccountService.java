@@ -29,7 +29,6 @@ public class AccountService implements IAccountService {
 		if(accountData != null){
 			accountData.setAccountBalance(account.getAccountBalance());
 			accountData.setAccountType(account.getAccountType());
-			accountData.setUserID(account.getUserID());
 			accountRepository.save(accountData);
 			return accountData;
 		}

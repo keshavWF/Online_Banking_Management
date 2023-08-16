@@ -23,7 +23,9 @@ public class PayeeService implements IPayeeService {
 
     @Override
     public Payee updatePayeeDetails(Payee payee){
-        final Payee payeeData = payeeRepository.findById(payee.getUserIDByAccount()).orElse(null);
+        final Payee payeeData = payeeRepository
+                .findById(payee.getUserIDByAccount()).orElse(null);
+
         if(payeeData != null){
             payeeData.setPayeeID(payee.getPayeeID());
             payeeData.setAccountNumber(payee.getAccountNumber());

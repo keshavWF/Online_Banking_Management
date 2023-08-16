@@ -1,20 +1,16 @@
-package com.example.model;
+package com.banking.app.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 
 public class User {
 	@Id
 	private int userID;
-	@Autowired
 	@Column
 	@NotNull(message = "Cannot be empty")
 	@Size(min = 3, max = 30, message = "Name between 3 and 30 characters")
@@ -36,21 +32,30 @@ public class User {
 	@Column
 	@NotNull(message = "Cannot be empty")
 	private String PermanentAddress;
-	@Column
-	@NotNull(message = "Cannot be empty")
-	private String Username;
-	@Column
-	@NotNull(message = "Cannot be empty")
-	private String Password;
-	@Column
-	@NotNull(message = "Cannot be empty")
-	private String isAdmin;
+
 	@Column
 	@NotNull(message = "Cannot be empty")
 	private long PhoneNumber;
 	@Column
 	@NotNull(message = "Cannot be empty")
 	private long Aadhar;
+
+	public User() {
+
+	}
+	public User(int userID, String firstName, String secondName, String currentAddress, String gender, String DOB, String fatherName, String permanentAddress, long phoneNumber, long aadhar) {
+		super();
+		this.userID = userID;
+		this.FirstName = firstName;
+		this.SecondName = secondName;
+		this.CurrentAddress = currentAddress;
+		this.Gender = gender;
+		this.DOB = DOB;
+		this.FatherName = fatherName;
+		this.PermanentAddress = permanentAddress;
+		this.PhoneNumber = phoneNumber;
+		this.Aadhar = aadhar;
+	}
 	
 	public int getUserID() {
 		return userID;
@@ -99,24 +104,6 @@ public class User {
 	}
 	public void setPermanentAddress(String permanentAddress) {
 		PermanentAddress = permanentAddress;
-	}
-	public String getUsername() {
-		return Username;
-	}
-	public void setUsername(String username) {
-		Username = username;
-	}
-	public String getPassword() {
-		return Password;
-	}
-	public void setPassword(String password) {
-		Password = password;
-	}
-	public String getIsAdmin() {
-		return isAdmin;
-	}
-	public void setIsAdmin(String isAdmin) {
-		this.isAdmin = isAdmin;
 	}
 	public long getPhoneNumber() {
 		return PhoneNumber;

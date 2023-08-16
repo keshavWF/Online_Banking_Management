@@ -14,27 +14,17 @@ public class AccountController {
 	
 	@PostMapping("/addAccount")
 	public void add(@RequestBody Account account) {
-		System.out.println("Account added successfully!!");
 		accountService.saveAccount(account);
-		System.out.println("Account added successfully!!");
 	}
 
 	@GetMapping("/fetchAccount/{accountNumber}")
-	public void fetchDetails(@PathVariable int accountNumber){
+	public Account fetchDetails(@PathVariable int accountNumber){
 		final Account fetchedAccount = accountService.getDetailsByAccountNumber(accountNumber);
-		if(fetchedAccount != null) {
-			System.out.println("Account Number: " + fetchedAccount.getAccountNumber());
-			System.out.println("Account Balance: " + fetchedAccount.getAccountBalance());
-			System.out.println("Account Type: " + fetchedAccount.getAccountType());
-			System.out.println("User ID: " + fetchedAccount.getUserID());
-		}
-		else
-			System.out.println("Cannot fetch account details!");
+		return fetchedAccount;
 	}
 
 	@PutMapping("/updateAccount")
 	public void updateDetails(@RequestBody Account account){
 		accountService.updateDetailsByAccountNumber(account);
-		System.out.println("Account updated successfully!!");
 	}
 }

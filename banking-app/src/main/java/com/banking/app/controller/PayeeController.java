@@ -15,26 +15,16 @@ public class PayeeController {
     @PostMapping("/addPayee")
     public void add(@RequestBody Payee payee) {
         payeeService.savePayee(payee);
-        System.out.println("Payee added successfully!!");
     }
 
     @GetMapping("/fetchPayee/{userID}")
-    public void fetchDetails(@PathVariable int userID){
+    public Payee fetchDetails(@PathVariable int userID){
         final Payee fetchedPayee = payeeService.getPayeeDetailsByUserID(userID);
-        if(fetchedPayee != null) {
-            System.out.println("Payee ID: " + fetchedPayee.getPayeeID());
-            System.out.println("First Name: " + fetchedPayee.getFirstName());
-            System.out.println("Last Name: " + fetchedPayee.getLastName());
-            System.out.println("Nick Name: " + fetchedPayee.getNickName());
-            System.out.println("Payee Account Number: " + fetchedPayee.getAccountNumber());
-        }
-        else
-            System.out.println("Cannot fetch payee details!");
+        return fetchedPayee;
     }
 
     @PutMapping("/updatePayee")
     public void updatePayeeDetails(@RequestBody Payee payee){
         payeeService.updatePayeeDetails(payee);
-        System.out.println("Payee details updated successfully!!");
     }
 }
