@@ -5,8 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,74 +15,79 @@ import jakarta.persistence.Table;
 @Table(name = "payee")
 public class Payee {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int payee_id;
-    @Column
-    private String FirstName;
-    @Column
-    private String LastName;
-    @Column
-    private String NickName;
-    @Column
-    private int AccountNumber;
+    private int payeeID;
+    @Column(nullable = false)
+    private String firstName;
+    @Column(nullable = false)
+    private String lastName;
+    @Column(nullable = false)
+    private String nickName;
+    @Column(nullable = false)
+    private int accountNumber;
 
 
     @JsonBackReference
     @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinColumn(name = "userid")
+    @JoinColumn(name = "userId")
     private Account account;
 
     public Payee() {
 
     }
 
-    public Payee(int payee_id, String FirstName, String LastName, String NickName, int AccountNumber) {
+    public Payee(int payeeID, String firstName, String lastName, String nickName, int accountNumber, Account account) {
         super();
-        this.payee_id = payee_id;
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-        this.AccountNumber = AccountNumber;
+
+        this.payeeID = payeeID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nickName = nickName;
+        this.accountNumber = accountNumber;
+        this.account = account;
     }
 
-    public int getPayee_id() {
-        return payee_id;
+    public int getPayeeID() {
+        return payeeID;
     }
 
-    public void setPayee_id(int payee_id) {
-        this.payee_id = payee_id;
+    public void setPayeeID(int payeeID) {
+        this.payeeID = payeeID;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.FirstName = firstName;
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.LastName = lastName;
+        this.lastName = lastName;
     }
 
     public String getNickName() {
-        return NickName;
+        return nickName;
     }
 
     public void setNickName(String nickName) {
-        this.NickName = nickName;
+        this.nickName = nickName;
     }
 
     public int getAccountNumber() {
-        return AccountNumber;
+        return accountNumber;
     }
 
     public void setAccountNumber(int accountNumber) {
-        this.AccountNumber = accountNumber;
+        this.accountNumber = accountNumber;
     }
 
+    public int getUserIDByAccount() {
+        return account.getUserID();
+    }
 }
 

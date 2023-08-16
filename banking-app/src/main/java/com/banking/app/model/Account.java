@@ -6,73 +6,67 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.OneToMany;
+
 
 @Entity
 @Table(name = "account")
 public class Account {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int acc_number;
+	private int accountNumber;
 	@Column
-	private double acc_balance;
-	@Column(name = "userid")
-	private int userid;
-	@Column
-	private String acc_type;
+	private double accountBalance;
+	@Column(name = "userId", nullable = false)
+	private int userID;
+	@Column(nullable = false)
+	private String accountType;
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "account",
 			cascade = {CascadeType.PERSIST, CascadeType.MERGE,
 					CascadeType.DETACH, CascadeType.REFRESH})
 	private List<Payee> payees;
-	//
+
 	public Account() {
 
 	}
 
-	public Account(double acc_balance, int userid, String acc_type) {
+	public Account(int accountNumber, double accountBalance, int userID, String accountType) {
 		super();
-		this.acc_balance = acc_balance;
-		this.userid = userid;
-		this.acc_type = acc_type;
+		this.accountNumber = accountNumber;
+		this.accountBalance = accountBalance;
+		this.userID = userID;
+		this.accountType = accountType;
 	}
 
-	public int getAcc_number() {
-		return acc_number;
+	public int getAccountNumber() {
+		return accountNumber;
 	}
 
-	public void setAcc_number(int acc_number) {
-		this.acc_number = acc_number;
+	public double getAccountBalance() {
+		return accountBalance;
 	}
 
-	public double getAcc_balance() {
-		return acc_balance;
+	public void setAccountBalance(double accountBalance) {
+		this.accountBalance = accountBalance;
 	}
 
-	public void setAcc_balance(double acc_balance) {
-		this.acc_balance = acc_balance;
+	public int getUserID() {
+		return userID;
 	}
 
-	public int getUserid() {
-		return userid;
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 
-	public void setUserid(int userid) {
-		this.userid = userid;
+	public String getAccountType() {
+		return accountType;
 	}
 
-	public String getAcc_type() {
-		return acc_type;
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
 	}
-
-	public void setAcc_type(String acc_type) {
-		this.acc_type = acc_type;
-	}
-
 
 }
