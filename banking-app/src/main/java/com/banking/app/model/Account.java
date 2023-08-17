@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 @Table(name = "account")
 public class Account {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int accountNumber;
 	@Column
 	private double accountBalance;
