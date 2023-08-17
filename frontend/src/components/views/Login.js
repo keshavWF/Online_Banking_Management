@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Form from '../../utilities/Forms'
-
+import axios from "../../utilities/axios";
+const LOGIN_URL = "/user/addUser";
 const Login = () => {
 
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [remember, setRemember] = useState(false);
     const [validate, setValidate] = useState({});
@@ -14,10 +15,9 @@ const Login = () => {
         let isValid = true;
 
         let validator = Form.validator({
-            email: {
-                value: email,
+            username: {
+                value: username,
                 isRequired: true,
-                isEmail: true
             },
             password: {
                 value: password,
@@ -36,14 +36,26 @@ const Login = () => {
         return isValid;
     }
 
-    const authenticate = (e) => {
+    const authenticate = async(e) => {
         e.preventDefault();
 
         const validate = validateLogin();
 
+        console.log(JSON.stringify({userID: "123", userName: username, password:password }));
+        const response = await axios.post(
+            
+            LOGIN_URL,
+            JSON.stringify({userID: "123", userName: username, password:password }),
+            {
+                headers: { "Content-Type": "application/json" },
+                withCredentials: true,
+            }
+            );
+        console.log(response);
+
         if (validate) {
             setValidate({});
-            setEmail('');
+            setUsername('');
             setPassword('');
             alert('Successfully Login');
         }
@@ -70,18 +82,18 @@ const Login = () => {
                         <p>Login to your account</p>
                         <div className="auth-form-container text-start">
                             <form className="auth-form" method="POST" onSubmit={authenticate} autoComplete={'off'}>
-                                <div className="email mb-3">
-                                    <input type="email"
-                                        className={`form-control ${validate.validate && validate.validate.email ? 'is-invalid ' : ''}`}
-                                        id="email"
-                                        name="email"
-                                        value={email}
-                                        placeholder="Email"
-                                        onChange={(e) => setEmail(e.target.value)}
+                                <div className="username mb-3">
+                                    <input type="username"
+                                        className={`form-control ${validate.validate && validate.validate.username ? 'is-invalid ' : ''}`}
+                                        id="username"
+                                        name="username"
+                                        value={username}
+                                        placeholder="username"
+                                        onChange={(e) => setUsername(e.target.value)}
                                     />
 
-                                    <div className={`invalid-feedback text-start ${(validate.validate && validate.validate.email) ? 'd-block' : 'd-none'}`} >
-                                        {(validate.validate && validate.validate.email) ? validate.validate.email[0] : ''}
+                                    <div className={`invalid-feedback text-start ${(validate.validate && validate.validate.username) ? 'd-block' : 'd-none'}`} >
+                                        {(validate.validate && validate.validate.username) ? validate.validate.username[0] : ''}
                                     </div>
                                 </div>
 
