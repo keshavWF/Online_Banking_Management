@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./components/views/Login";
 import Register from "./components/views/Register";
 import Forgot from "./components/views/Forgot";
+import UserDashboard from "./components/views/UserDashboard";
 
 const Auth = () => {
   return (
@@ -9,6 +10,7 @@ const Auth = () => {
       <Switch>
         <Route path='/login' component={Login} />
         <Route path='/register' component={Register} />
+        <Route path='/dashboard' component={UserDashboard} />
         <Route path='/forgot-password' component={Forgot} />
         <Route path='/' component={Login} />
       </Switch>

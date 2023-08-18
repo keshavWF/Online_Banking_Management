@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Form from '../../utilities/Forms'
 import axios from "../../utilities/axios";
 const LOGIN_URL = "/user/addUser";
@@ -12,6 +12,7 @@ const Login = () => {
     const [validate, setValidate] = useState({});
     const [showPassword, setShowPassword] = useState(false);
 
+    const history = useHistory();
     const validateLogin = () => {
         let isValid = true;
 
@@ -60,8 +61,7 @@ const Login = () => {
 
         const res = await axios.get(
             
-            USER_URL,
-            {params: {userID: 1}},
+            USER_URL+"/123",
             {
                 headers: { "Content-Type": "application/json",
             "Access-Control-Aloow-Headers": "Content-Type",
@@ -77,8 +77,8 @@ const Login = () => {
             setValidate({});
             setUsername('');
             setPassword('');
-            alert('Successfully Login');
         }
+        history.push('/dashboard');
     }
 
     const togglePassword = (e) => {
