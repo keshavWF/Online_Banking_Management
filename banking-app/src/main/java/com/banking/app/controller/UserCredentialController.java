@@ -5,12 +5,14 @@ import com.banking.app.service.Interfaces.IUserCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserCredentialController {
     @Autowired
     private IUserCredentialService userCredentialService;
 
+    @CrossOrigin
     @PostMapping("/addUser")
     public void add(@RequestBody UserCredential userCredential) {
         userCredentialService.saveUserCredentials(userCredential);
