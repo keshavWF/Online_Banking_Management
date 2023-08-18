@@ -5,6 +5,7 @@ import com.banking.app.service.Interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/userDetails")
 public class UserController {

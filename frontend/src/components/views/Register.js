@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Form from '../../utilities/Forms'
 import axios from "../../utilities/axios";
-const REGISTER_URL = "/userDetails/addUser"
+const REGISTER_URL = "/userDetails/addUser";
+const USERNAME_URL = "/userDetails/username";
+
 const Register = () => {
 
     const [firstname, setFirstName] = useState('');
@@ -21,6 +23,7 @@ const Register = () => {
     const [aadhar, setAadhar] = useState('');
     const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
+    const history = useHistory();
     const validateRegister = () => {
         let isValid = true;
 
@@ -76,20 +79,42 @@ const Register = () => {
 
             // alert('Successfully Register User');
         }
-        console.log(JSON.stringify({ aadhar, current_address: currentaddress, dob, father_name: fathername, first_name: firstname, gender, permanent_address: permanentaddress, phone_number: phonenumber, second_name: lastname, userid:"910293" }));
+        // console.log(JSON.stringify({ aadhar, current_address: currentaddress, dob, father_name: fathername, first_name: firstname, gender, permanent_address: permanentaddress, phone_number: phonenumber, second_name: lastname, userid:"910293" }));
         const response = await axios.post(
             
             REGISTER_URL,
-            JSON.stringify({ aadhar, current_address: currentaddress, dob, father_name: fathername, first_name: firstname, gender, permanent_address: permanentaddress, phone_number: phonenumber, second_name: lastname, userid:"910293" }),
+            JSON.stringify({ userID:"123", FirstName : firstname, SecondName : lastname, CurrentAddress : currentaddress, Gender: gender, DOB: dob, FatherName: fathername, PermanentAddress: permanentaddress, PhoneNumber: phonenumber, Aadhar: aadhar}),
             {
-                headers: { "Content-Type": "application/json" },
-                withCredentials: true,
+                headers: { "Content-Type": "application/json",
+            "Access-Control-Aloow-Headers": "Content-Type",
+        "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin":"*",
+"Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE" },
+                withCredentials: false,
             }
             );
-            console.log(response);
+        console.log(response);
+        history.push('/login');
+
             
     }
+    const uniqueUsername = async (e) => {
+        e.preventDefault();
 
+        const res = await axios.get(
+            
+            USERNAME_URL,
+            {
+                headers: { "Content-Type": "application/json",
+            "Access-Control-Aloow-Headers": "Content-Type",
+        "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin":"*",
+"Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE" },
+                withCredentials: false,
+            }
+            );
+            
+    }
     const togglePassword = (e) => {
         if (showPassword) {
             setShowPassword(false);
@@ -131,7 +156,7 @@ const Register = () => {
                                         placeholder="Username"
                                         onChange={(e) => setUsername(e.target.value)}
                                     />
-
+                                    <button onClick={uniqueUsername} type="submit" className="btn btn-primary w-10 theme-btn mx-auto">test</button>
                                     <div className={`invalid-feedback text-start ${(validate.validate && validate.validate.username) ? 'd-block' : 'd-none'}`} >
                                         {(validate.validate && validate.validate.username) ? validate.validate.username[0] : ''}
                                     </div>

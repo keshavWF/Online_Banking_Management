@@ -9,7 +9,6 @@ import java.util.List;
 @Table(name = "UserCredential")
 public class UserCredential {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userID;
 
     @Column(nullable = false)
