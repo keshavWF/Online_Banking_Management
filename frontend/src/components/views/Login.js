@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Form from '../../utilities/Forms'
 import axios from "../../utilities/axios";
 const LOGIN_URL = "/user/addUser";
+const USER_URL = "/user/fetchUser";
 const Login = () => {
 
     const [username, setUsername] = useState('');
@@ -41,14 +42,33 @@ const Login = () => {
 
         const validate = validateLogin();
 
-        console.log(JSON.stringify({userID: "123", userName: username, password:password }));
+        console.log(JSON.stringify({userID: "123", userName: username, password:password, isAdmin:"No" }));
         const response = await axios.post(
             
             LOGIN_URL,
             JSON.stringify({userID: "123", userName: username, password:password }),
             {
-                headers: { "Content-Type": "application/json" },
-                withCredentials: true,
+                headers: { "Content-Type": "application/json",
+            "Access-Control-Aloow-Headers": "Content-Type",
+        "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin":"*",
+"Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE" },
+                withCredentials: false,
+            }
+            );
+        console.log(response);
+
+        const res = await axios.get(
+            
+            USER_URL,
+            {params: {userID: 1}},
+            {
+                headers: { "Content-Type": "application/json",
+            "Access-Control-Aloow-Headers": "Content-Type",
+        "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin":"*",
+"Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE" },
+                withCredentials: false,
             }
             );
         console.log(response);
