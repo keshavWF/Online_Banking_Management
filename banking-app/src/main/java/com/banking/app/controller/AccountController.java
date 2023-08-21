@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import com.banking.app.model.Account;
 import com.banking.app.service.Interfaces.IAccountService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/account")
 public class AccountController {
@@ -26,5 +28,10 @@ public class AccountController {
 	@PutMapping("/updateAccount")
 	public void updateDetails(@RequestBody Account account){
 		accountService.updateDetailsByAccountNumber(account);
+	}
+
+	@GetMapping("/getAccount/{userName}")
+	public List<Account> getAccountDetailsByUserName(@PathVariable String userName){
+		return accountService.getAccountsByUserName(userName);
 	}
 }

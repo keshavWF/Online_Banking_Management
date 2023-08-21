@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.banking.app.model.Account;
 
+import java.util.List;
+
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer>{
-	
+    List<Account> findByUserCredential_UserName(String userName);
 }

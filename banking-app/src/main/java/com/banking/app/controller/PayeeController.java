@@ -17,9 +17,9 @@ public class PayeeController {
         payeeService.savePayee(payee);
     }
 
-    @GetMapping("/fetchPayee/{userID}")
-    public Payee fetchDetails(@PathVariable int userID){
-        final Payee fetchedPayee = payeeService.getPayeeDetailsByUserID(userID);
+    @GetMapping("/fetchPayee/{payeeID}")
+    public Payee fetchDetails(@PathVariable int payeeID){
+        final Payee fetchedPayee = payeeService.getPayeeDetailsByUserID(payeeID);
         return fetchedPayee;
     }
 

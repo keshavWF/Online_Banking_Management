@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.banking.app.model.Account;
 import com.banking.app.repository.AccountRepository;
 
+import java.util.List;
+
 @Service
 public class AccountService implements IAccountService {
 	
@@ -34,5 +36,10 @@ public class AccountService implements IAccountService {
 		}
 
 		return null;
+	}
+
+	@Override
+	public List<Account> getAccountsByUserName(String userName) {
+		return accountRepository.findByUserCredential_UserName(userName);
 	}
 }
