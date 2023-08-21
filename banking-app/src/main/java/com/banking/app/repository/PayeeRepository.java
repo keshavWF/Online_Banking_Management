@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PayeeRepository extends JpaRepository<Payee, Integer>{
-	
+     List<Account> findByPayeeDetails_UserName(String userName);
 }

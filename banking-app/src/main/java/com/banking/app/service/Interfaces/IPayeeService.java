@@ -8,4 +8,6 @@ public interface IPayeeService {
     public Payee getPayeeDetailsByUserID(int userID);
 
     public Payee updatePayeeDetails(Payee payee);
+
+    public List<Payee> getPayeesByUserName(String userName);
 }

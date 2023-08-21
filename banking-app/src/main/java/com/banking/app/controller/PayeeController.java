@@ -27,4 +27,9 @@ public class PayeeController {
     public void updatePayeeDetails(@RequestBody Payee payee){
         payeeService.updatePayeeDetails(payee);
     }
+
+    @GetMapping("/getPayee/{userName}")
+	public List<Payee> getPayeeDetailsByUserName(@PathVariable String userName){
+		return payeeService.getPayeesByUserName(userName);
+	}
 }
