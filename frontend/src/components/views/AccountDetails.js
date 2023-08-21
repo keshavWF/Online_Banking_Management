@@ -3,18 +3,17 @@ import axios from "axios";
 
 const ACC_URL = "/getAccounts/";
 
-
 const BankAccount = () => {
   const [accountData, setAccountData] = useState([]);
 
   useEffect(() => {
-    
-    axios.get(ACC_URL + sessionStorage.getItem("username"))
-      .then(response => {
+    axios
+      .get(ACC_URL + sessionStorage.getItem("username"))
+      .then((response) => {
         setAccountData(response.data);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }, []);
 
