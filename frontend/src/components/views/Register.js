@@ -3,7 +3,8 @@ import { Link, useHistory } from "react-router-dom";
 import Form from '../../utilities/Forms'
 import axios from "../../utilities/axios";
 const REGISTER_URL = "/userDetails/addUser";
-const USERNAME_URL = "/exists";
+const USERNAME_URL = "/bank/exists";
+const LOGIN_URL= "/user/addUser"
 
 const Register = () => {
 
@@ -59,32 +60,44 @@ const Register = () => {
         return isValid;
     }
 
-    const register = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const validate = validateRegister();
 
-        if (validate) {
-            setValidate({});
-            setFirstName('');
-            setLastName('');
-            setEmail('');
-            setPassword('');
-            setCurrentAddress('');
-            setDob('');
-            setFatherName('');
-            setGender('');
-            setPermanentAddress('');
-            setPhoneNumber('');
-            setUsername('');
-            setAadhar('');
-            // alert('Successfully Register User');
+        // if (validate) {
+        //     setValidate({});
+        //     setFirstName('');
+        //     setLastName('');
+        //     setEmail('');
+        //     setPassword('');
+        //     setCurrentAddress('');
+        //     setDob('');
+        //     setFatherName('');
+        //     setGender('');
+        //     setPermanentAddress('');
+        //     setPhoneNumber();
+        //     setUsername('');
+        //     setAadhar();
+        //     // alert('Successfully Register User');
+        // }
+        const v2 = PWD_REGEX.test(password);
+        if (!v2 )  {
+          console.log("Please enter a proper password, must have a smallcase, and special character");
+          return;
         }
+        console.log(checkUsername);
+        if(!checkUsername){
+            console.log("PLease enter a unique username");
+            return;
+        }
+        console.log(JSON.stringify({ userName: username, firstName : firstname, secondName : lastname, currentAddress : currentaddress, gender: gender, dob: dob, fatherName: fathername, permanentAddress: permanentaddress, phoneNumber: phonenumber, aadhar: aadhar}));
+            
         // console.log(JSON.stringify({ aadhar, current_address: currentaddress, dob, father_name: fathername, first_name: firstname, gender, permanent_address: permanentaddress, phone_number: phonenumber, second_name: lastname, userid:"910293" }));
         const response = await axios.post(
             
             REGISTER_URL,
-            JSON.stringify({ userName:"123", firstName : firstname, secondName : lastname, currentAddress : currentaddress, gender: gender, dob: dob, fatherName: fathername, permanentAddress: permanentaddress, phoneNumber: phonenumber, aadhar: aadhar}),
+            JSON.stringify({ userName: username, firstName : firstname, secondName : lastname, currentAddress : currentaddress, gender: gender, dob: dob, fatherName: fathername, permanentAddress: permanentaddress, phoneNumber: phonenumber, aadhar: aadhar}),
             {
                 headers: { "Content-Type": "application/json",
             "Access-Control-Aloow-Headers": "Content-Type",
@@ -94,17 +107,31 @@ const Register = () => {
                 withCredentials: false,
             }
             );
-        console.log(response);
+        const credential_response = await axios.post(
+        
+            LOGIN_URL,
+            JSON.stringify({ userName: username, password: password}),
+            {
+                headers: { "Content-Type": "application/json",
+            "Access-Control-Aloow-Headers": "Content-Type",
+        "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin":"*",
+"Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE" },
+                withCredentials: false,
+            }
+            );
+        console.log(credential_response);
         history.push('/login');
 
             
     }
     const uniqueUsername = async (e) => {
-        e.preventDefault();
+        
+        setUsername(e);
 
-        const res = await axios.get(
+        const resp = await axios.get(
             
-            USERNAME_URL + "/" + {username},
+            USERNAME_URL + "/" + e,
             {
                 headers: { "Content-Type": "application/json",
             "Access-Control-Aloow-Headers": "Content-Type",
@@ -114,8 +141,16 @@ const Register = () => {
                 withCredentials: false,
             }
             );
-        console.log(res);
-        setCheckUsername(res === "YES");
+        
+        const res = resp.data;
+        console.log(res.valueOf());
+        if(res.valueOf() === "NO"){
+            setCheckUsername(true);
+        }
+        else{
+            setCheckUsername(false);
+        }
+        console.log(checkUsername);
             
     }
     const togglePassword = (e) => {
@@ -126,16 +161,19 @@ const Register = () => {
         }
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const v2 = PWD_REGEX.test(pwd);
-        if (!v2) {
-          console.log("Invalid Entry");
-          return;
-        }
-      
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const v2 = PWD_REGEX.test(password);
+    //     if (!v2 )  {
+    //       console.log("Invalid Entry");
+    //       return;
+    //     }
+    //     if(!checkUsername){
+    //         alert("PLease enter a unique username");
+    //     }
         
-      };
+        
+    //   };
     return (
         <div className="row g-0 auth-wrapper">
             <div className="col-12 col-md-5 col-lg-6 h-100 auth-background-col">
@@ -148,7 +186,7 @@ const Register = () => {
                     <div className="auth-body mx-auto">
                         <p>Create your Account</p>
                         <div className="auth-form-container text-start">
-                            <form className="auth-form" method="POST" onSubmit={register} autoComplete={'off'}>
+                            <form className="auth-form" method="POST" onSubmit={handleSubmit} autoComplete={'off'}>
 
                                 <div className="username mb-3">
                                     <input type="text"
@@ -157,10 +195,10 @@ const Register = () => {
                                         name="username"
                                         value={username}
                                         placeholder="Username"
-                                        onChange={(e) => setUsername(e.target.value)}
+                                        onChange={(e) => uniqueUsername(e.target.value)}
                                     />
-                                    <button onClick={uniqueUsername} className="btn btn-primary w-10 theme-btn mx-auto">test</button>
-                                    <div className={`invalid-feedback text-start ${(validate.validate && validate.validate.username) ? 'd-block' : 'd-none'}`} >
+                                    
+                                    <div className={`invalid-feedback text-start ${(validate.validate && validate.validate.username && checkUsername) ? 'd-block' : 'd-none'}`} >
                                         {(validate.validate && validate.validate.username) ? validate.validate.username[0] : ''}
                                     </div>
                                 </div>
@@ -321,7 +359,7 @@ const Register = () => {
                                         id="aadhar"
                                         name="aadhar"
                                         value={aadhar}
-                                        placeholder="Phone Number"
+                                        placeholder="Aadhar Number"
                                         onChange={(e) => setAadhar(e.target.value)}
                                     />
 

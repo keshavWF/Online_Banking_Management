@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import Form from '../../utilities/Forms'
 import axios from "../../utilities/axios";
 const LOGIN_URL = "/user/addUser";
-const USER_URL = "/user/fetchUser";
+const CAN_LOGIN_URL = "/bank/canLogin";
 const Login = () => {
 
     const [username, setUsername] = useState('');
@@ -43,25 +43,12 @@ const Login = () => {
 
         const validate = validateLogin();
 
-        console.log(JSON.stringify({userID: "123", userName: username, password:password, isAdmin:"No" }));
-        const response = await axios.post(
-            
-            LOGIN_URL,
-            JSON.stringify({userID: "123", userName: username, password:password }),
-            {
-                headers: { "Content-Type": "application/json",
-            "Access-Control-Aloow-Headers": "Content-Type",
-        "Access-Control-Allow-Credentials": true,
-    "Access-Control-Allow-Origin":"*",
-"Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE" },
-                withCredentials: false,
-            }
-            );
-        console.log(response);
+        console.log(JSON.stringify({ userName: username, password:password, isAdmin:"No"}));
+        
 
         const res = await axios.get(
             
-            USER_URL+"/123",
+            CAN_LOGIN_URL+"/"+username+ "/" +password,
             {
                 headers: { "Content-Type": "application/json",
             "Access-Control-Aloow-Headers": "Content-Type",
@@ -71,12 +58,10 @@ const Login = () => {
                 withCredentials: false,
             }
             );
-        console.log(response);
-
-        if (validate) {
-            setValidate({});
-            setUsername('');
-            setPassword('');
+        console.log(res);
+        if(res.data.valueOf() === "IncorrectPassword"){
+            alert("Incorrect user credentials");
+            return;
         }
         history.push('/dashboard');
     }

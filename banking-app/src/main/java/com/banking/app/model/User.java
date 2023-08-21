@@ -25,15 +25,15 @@ public class User {
     @Column
     private String PermanentAddress;
     @Column
-    private long PhoneNumber;
+    private String PhoneNumber;
     @Column
-    private long Aadhar;
+    private String Aadhar;
 
     public User() {
 
     }
     public User(String userName, String firstName, String secondName, String currentAddress, String gender, String dob,
-                String fatherName, String permanentAddress, long phoneNumber, long aadhar) {
+                String fatherName, String permanentAddress, String phoneNumber, String aadhar) {
         super();
         this.userName = userName;
         this.firstName = firstName;
@@ -95,16 +95,16 @@ public class User {
     public void setPermanentAddress(String permanentAddress) {
         this.PermanentAddress = permanentAddress;
     }
-    public long getPhoneNumber() {
+    public String getPhoneNumber() {
         return PhoneNumber;
     }
-    public void setPhoneNumber(long phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.PhoneNumber = phoneNumber;
     }
-    public long getAadhar() {
+    public String getAadhar() {
         return Aadhar;
     }
-    public void setAadhar(long aadhar) {
+    public void setAadhar(String aadhar) {
         this.Aadhar = aadhar;
     }
 

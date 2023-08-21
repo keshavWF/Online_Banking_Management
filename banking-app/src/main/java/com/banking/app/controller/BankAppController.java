@@ -6,6 +6,7 @@ import com.banking.app.service.OTPService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/bank")
 public class BankAppController {
