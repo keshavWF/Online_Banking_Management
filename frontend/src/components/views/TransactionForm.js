@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
-import axios from 'axios';
+import React, { useState } from "react";
+import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import axios from "axios";
 
 const samplePayees = [
-  { id: 1, name: 'Payee 1' },
-  { id: 2, name: 'Payee 2' },
-  { id: 3, name: 'Payee 3' },
+  { id: 1, name: "Payee 1" },
+  { id: 2, name: "Payee 2" },
+  { id: 3, name: "Payee 3" },
 ];
 
 const PaymentForm = () => {
   const [payees, setPayees] = useState(samplePayees);
-  const [selectedPayee, setSelectedPayee] = useState('');
-  const [amount, setAmount] = useState('');
-  const [transactionMode, setTransactionMode] = useState('');
+  const [selectedPayee, setSelectedPayee] = useState("");
+  const [amount, setAmount] = useState("");
+  const [transactionMode, setTransactionMode] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Get userName from sessionStorage
-    const userName = sessionStorage.getItem('userName');
+    const userName = sessionStorage.getItem("userName");
 
     // Create the data object for POST request
     const paymentData = {
@@ -31,15 +31,15 @@ const PaymentForm = () => {
 
     try {
       // Make POST request to submit payment (replace with your API endpoint)
-      await axios.post('your_payment_api_endpoint', paymentData);
-      alert('Payment submitted successfully!');
+      await axios.post("your_payment_api_endpoint", paymentData);
+      alert("Payment submitted successfully!");
       // Clear form fields after successful submission
-      setSelectedPayee('');
-      setAmount('');
-      setTransactionMode('');
+      setSelectedPayee("");
+      setAmount("");
+      setTransactionMode("");
     } catch (error) {
-      console.error('Error submitting payment:', error);
-      alert('Error submitting payment. Please try again.');
+      console.error("Error submitting payment:", error);
+      alert("Error submitting payment. Please try again.");
     }
   };
 
@@ -56,8 +56,10 @@ const PaymentForm = () => {
             onChange={(e) => setSelectedPayee(e.target.value)}
           >
             <option value="">Select a payee</option>
-            {payees.map(payee => (
-              <option key={payee.id} value={payee.id}>{payee.name}</option>
+            {payees.map((payee) => (
+              <option key={payee.id} value={payee.id}>
+                {payee.name}
+              </option>
             ))}
           </Input>
         </FormGroup>
@@ -84,7 +86,9 @@ const PaymentForm = () => {
             onChange={(e) => setAmount(e.target.value)}
           />
         </FormGroup>
-        <Button color="primary" type="submit">Submit Payment</Button>
+        <Button color="primary" type="submit">
+          Submit Payment
+        </Button>
       </Form>
     </div>
   );
