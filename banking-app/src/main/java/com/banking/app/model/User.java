@@ -3,50 +3,42 @@ package com.banking.app.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 
 @Entity
-
+@Table
 public class User {
     @Id
-    private int userID;
+    private String userName;
     @Column
-    @NotNull(message = "Cannot be empty")
     @Size(min = 3, max = 30, message = "Name between 3 and 30 characters")
-    private String FirstName;
+    private String name;
     @Column
     private String SecondName;
     @Column
-    @NotNull(message = "Cannot be empty")
     private String CurrentAddress;
     @Column
-    @NotNull(message = "Cannot be empty")
     private String Gender;
     @Column
-    @NotNull(message = "Cannot be empty")
     private String DOB;
     @Column
-    @NotNull(message = "Cannot be empty")
     private String FatherName;
     @Column
-    @NotNull(message = "Cannot be empty")
     private String PermanentAddress;
-
     @Column
-    @NotNull(message = "Cannot be empty")
     private long PhoneNumber;
     @Column
-    @NotNull(message = "Cannot be empty")
     private long Aadhar;
 
     public User() {
 
     }
-    public User(int userID, String firstName, String secondName, String currentAddress, String gender, String DOB, String fatherName, String permanentAddress, long phoneNumber, long aadhar) {
+    public User(String userName, String firstName, String secondName, String currentAddress, String gender, String DOB,
+                String fatherName, String permanentAddress, long phoneNumber, long aadhar) {
         super();
-        this.userID = userID;
-        this.FirstName = firstName;
+        this.userName = userName;
+        this.name = firstName;
         this.SecondName = secondName;
         this.CurrentAddress = currentAddress;
         this.Gender = gender;
@@ -57,17 +49,17 @@ public class User {
         this.Aadhar = aadhar;
     }
 
-    public int getUserID() {
-        return userID;
+    public String getUserName() {
+        return userName;
     }
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
     public String getFirstName() {
-        return FirstName;
+        return name;
     }
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        this.name = firstName;
     }
     public String getSecondName() {
         return SecondName;

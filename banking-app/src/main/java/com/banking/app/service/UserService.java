@@ -17,13 +17,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User getUserDetailsByUserID(int userID){
-        return userRepository.findById(userID).orElse(null);
+    public User getUserDetailsByUserName(String userName){
+        return userRepository.findById(userName).orElse(null);
     }
 
     @Override
-    public User updateUserDetails(User user){
-        final User userData = userRepository.findById(user.getUserID()).orElse(null);
+    public User updateUserDetails(final User user){
+        final User userData = userRepository.findById(user.getUserName()).orElse(null);
         if(userData != null){
             userData.setFirstName(user.getFirstName());
             userData.setSecondName(user.getSecondName());

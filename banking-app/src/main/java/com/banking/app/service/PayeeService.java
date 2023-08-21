@@ -17,14 +17,14 @@ public class PayeeService implements IPayeeService {
     }
 
     @Override
-    public Payee getPayeeDetailsByUserID(int userID){
-        return payeeRepository.findById(userID).orElse(null);
+    public Payee getPayeeDetailsByUserID(int payeeID){
+        return payeeRepository.findById(payeeID).orElse(null);
     }
 
     @Override
     public Payee updatePayeeDetails(Payee payee){
         final Payee payeeData = payeeRepository
-                .findById(payee.getUserIDByAccount()).orElse(null);
+                .findById(payee.getPayeeID()).orElse(null);
 
         if(payeeData != null){
             payeeData.setPayeeID(payee.getPayeeID());

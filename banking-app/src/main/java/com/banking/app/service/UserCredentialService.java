@@ -17,14 +17,14 @@ public class UserCredentialService implements IUserCredentialService {
     }
 
     @Override
-    public UserCredential getUserCredentialsByUserID(int userID){
-        return credentialRepository.findById(userID).orElse(null);
+    public UserCredential getUserCredentialsByUserName(String userName){
+        return credentialRepository.findById(userName).orElse(null);
     }
 
     @Override
     public UserCredential updateUserCredentials(UserCredential userCredential){
         final UserCredential credentials = credentialRepository
-                .findById(userCredential.getUserID()).orElse(null);
+                .findById(userCredential.getUserName()).orElse(null);
 
         if(credentials != null){
             credentials.setUserName(userCredential.getUserName());

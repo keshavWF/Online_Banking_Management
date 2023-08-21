@@ -22,7 +22,7 @@ public class Payee {
 
     @JsonBackReference
     @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "userName")
     private UserCredential userCredential;
 
     public Payee() {
@@ -78,8 +78,8 @@ public class Payee {
         this.accountNumber = accountNumber;
     }
 
-    public int getUserIDByAccount() {
-        return userCredential.getUserID();
+    public String getUserNameByAccount() {
+        return userCredential.getUserName();
     }
 }
 

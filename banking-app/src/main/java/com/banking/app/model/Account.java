@@ -16,7 +16,7 @@ public class Account {
 
 	@JsonBackReference
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-	@JoinColumn(name = "userID")
+	@JoinColumn(name = "userName")
 	private UserCredential userCredential;
 
 	public Account() {

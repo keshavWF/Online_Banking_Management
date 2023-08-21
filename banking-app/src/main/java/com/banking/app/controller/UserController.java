@@ -17,9 +17,9 @@ public class UserController {
         userService.saveUser(user);
     }
 
-    @GetMapping("/fetchUser/{userID}")
-    public User fetchDetails(@PathVariable int userID){
-        final User fetchedUserDetails = userService.getUserDetailsByUserID(userID);
+    @GetMapping("/fetchUser/{userName}")
+    public User fetchDetails(@PathVariable String userName){
+        final User fetchedUserDetails = userService.getUserDetailsByUserName(userName);
         return fetchedUserDetails;
     }
 

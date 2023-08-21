@@ -13,7 +13,7 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int referenceID;
 	@Column(nullable = false)
-	private int userID;
+	private int userName;
 	@Column(nullable = false)
 	private int Amount;
 	@Column(nullable = false)

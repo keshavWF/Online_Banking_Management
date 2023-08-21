@@ -18,9 +18,9 @@ public class UserCredentialController {
         userCredentialService.saveUserCredentials(userCredential);
     }
 
-    @GetMapping("/fetchUser/{userID}")
-    public UserCredential fetchDetails(@PathVariable int userID){
-        final UserCredential fetchedUser = userCredentialService.getUserCredentialsByUserID(userID);
+    @GetMapping("/fetchUser/{userName}")
+    public UserCredential fetchDetails(@PathVariable String userName){
+        final UserCredential fetchedUser = userCredentialService.getUserCredentialsByUserName(userName);
         return fetchedUser;
     }
 

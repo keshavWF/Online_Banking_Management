@@ -9,9 +9,6 @@ import java.util.List;
 @Table(name = "UserCredential")
 public class UserCredential {
     @Id
-    private int userID;
-
-    @Column(nullable = false)
     private String userName;
 
     @Column(nullable = false)
@@ -40,14 +37,6 @@ public class UserCredential {
         super();
         this.userName = userName;
         this.password = password;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     public String getUserName() {

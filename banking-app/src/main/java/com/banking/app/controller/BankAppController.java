@@ -12,9 +12,9 @@ public class BankAppController {
     @Autowired
     private IUserCredentialService userCredentialService;
 
-    @GetMapping("/canLogin/{userID}/{password}")
-    public String canLoginUser(@PathVariable int userID, @PathVariable String password){
-        final UserCredential userExists = userCredentialService.getUserCredentialsByUserID(userID);
+    @GetMapping("/canLogin/{userName}/{password}")
+    public String canLoginUser(@PathVariable String userName, @PathVariable String password){
+        final UserCredential userExists = userCredentialService.getUserCredentialsByUserName(userName);
         if(userExists != null){
             return userExists.getPassword().contentEquals(password) ? "YES" : "";
         }
