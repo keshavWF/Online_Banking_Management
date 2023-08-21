@@ -14,9 +14,9 @@ public class AccountController {
 	@Autowired
 	private IAccountService accountService;
 	
-	@PostMapping("/addAccount")
-	public void add(@RequestBody Account account) {
-		accountService.saveAccount(account);
+	@PostMapping("/addAccount/{userName}")
+	public void add(@RequestBody Account account, @PathVariable String userName) {
+		accountService.saveAccount(account, userName);
 	}
 
 	@GetMapping("/fetchAccount/{accountNumber}")

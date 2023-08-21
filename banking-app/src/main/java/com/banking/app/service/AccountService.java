@@ -1,6 +1,8 @@
 package com.banking.app.service;
 
+import com.banking.app.model.UserCredential;
 import com.banking.app.service.Interfaces.IAccountService;
+import com.banking.app.service.Interfaces.IUserCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +17,14 @@ public class AccountService implements IAccountService {
 	@Autowired
 	private AccountRepository accountRepository;
 
+	@Autowired
+	private IUserCredentialService userCredentialService;
+
 	@Override
-	public void saveAccount(Account account) {
-		accountRepository.save(account);
+	public void saveAccount(Account account, String userName) {
+		final UserCredential tempCredential = userCredentialService.getUserCredentialsByUserName(userName);
+		tempCredential.setAccountList(account);
+		userCredentialService.saveUserCredentials(tempCredential);
 	}
 
 	@Override

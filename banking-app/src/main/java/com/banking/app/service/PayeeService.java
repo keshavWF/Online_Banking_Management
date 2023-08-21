@@ -43,6 +43,6 @@ public class PayeeService implements IPayeeService {
 
     @Override
 	public List<Payee> getPayeesByUserName(String userName) {
-		return payeeRepository.findByPayeeDetails_UserName(userName);
+		return payeeRepository.findByUserCredential_UserName(userName);
 	}
 }
