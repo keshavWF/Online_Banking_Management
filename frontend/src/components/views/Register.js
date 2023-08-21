@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import Form from '../../utilities/Forms'
 import axios from "../../utilities/axios";
 const REGISTER_URL = "/userDetails/addUser";
-const USERNAME_URL = "/userDetails/username";
+const USERNAME_URL = "/exists";
 
 const Register = () => {
 
@@ -20,6 +20,7 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [validate, setValidate] = useState({});
     const [showPassword, setShowPassword] = useState(false);
+    const [checkUsername, setCheckUsername] = useState(false);
     const [aadhar, setAadhar] = useState('');
     const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
@@ -76,14 +77,14 @@ const Register = () => {
             setPermanentAddress('');
             setPhoneNumber('');
             setUsername('');
-
+            setAadhar('');
             // alert('Successfully Register User');
         }
         // console.log(JSON.stringify({ aadhar, current_address: currentaddress, dob, father_name: fathername, first_name: firstname, gender, permanent_address: permanentaddress, phone_number: phonenumber, second_name: lastname, userid:"910293" }));
         const response = await axios.post(
             
             REGISTER_URL,
-            JSON.stringify({ userID:"123", FirstName : firstname, SecondName : lastname, CurrentAddress : currentaddress, Gender: gender, DOB: dob, FatherName: fathername, PermanentAddress: permanentaddress, PhoneNumber: phonenumber, Aadhar: aadhar}),
+            JSON.stringify({ userName:"123", firstName : firstname, secondName : lastname, currentAddress : currentaddress, gender: gender, dob: dob, fatherName: fathername, permanentAddress: permanentaddress, phoneNumber: phonenumber, aadhar: aadhar}),
             {
                 headers: { "Content-Type": "application/json",
             "Access-Control-Aloow-Headers": "Content-Type",
@@ -103,7 +104,7 @@ const Register = () => {
 
         const res = await axios.get(
             
-            USERNAME_URL,
+            USERNAME_URL + "/" + {username},
             {
                 headers: { "Content-Type": "application/json",
             "Access-Control-Aloow-Headers": "Content-Type",
@@ -113,6 +114,8 @@ const Register = () => {
                 withCredentials: false,
             }
             );
+        console.log(res);
+        setCheckUsername(res === "YES");
             
     }
     const togglePassword = (e) => {
@@ -123,16 +126,16 @@ const Register = () => {
         }
     }
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     const v2 = PWD_REGEX.test(pwd);
-    //     if (!v2) {
-    //       console.log("Invalid Entry");
-    //       return;
-    //     }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const v2 = PWD_REGEX.test(pwd);
+        if (!v2) {
+          console.log("Invalid Entry");
+          return;
+        }
       
         
-    //   };
+      };
     return (
         <div className="row g-0 auth-wrapper">
             <div className="col-12 col-md-5 col-lg-6 h-100 auth-background-col">
@@ -156,7 +159,7 @@ const Register = () => {
                                         placeholder="Username"
                                         onChange={(e) => setUsername(e.target.value)}
                                     />
-                                    <button onClick={uniqueUsername} type="submit" className="btn btn-primary w-10 theme-btn mx-auto">test</button>
+                                    <button onClick={uniqueUsername} className="btn btn-primary w-10 theme-btn mx-auto">test</button>
                                     <div className={`invalid-feedback text-start ${(validate.validate && validate.validate.username) ? 'd-block' : 'd-none'}`} >
                                         {(validate.validate && validate.validate.username) ? validate.validate.username[0] : ''}
                                     </div>
@@ -265,7 +268,7 @@ const Register = () => {
                                 
                                 <div className="phonenumber mb-3">
                                     <input type="text"
-                                        className={`form-control ${validate.validate && validate.validate.username ? 'is-invalid ' : ''}`}
+                                        className={`form-control ${validate.validate && validate.validate.phonenumber ? 'is-invalid ' : ''}`}
                                         id="phonenumber"
                                         name="phonenumber"
                                         value={phonenumber}
@@ -273,8 +276,8 @@ const Register = () => {
                                         onChange={(e) => setPhoneNumber(e.target.value)}
                                     />
 
-                                    <div className={`invalid-feedback text-start ${(validate.validate && validate.validate.username) ? 'd-block' : 'd-none'}`} >
-                                        {(validate.validate && validate.validate.username) ? validate.validate.username[0] : ''}
+                                    <div className={`invalid-feedback text-start ${(validate.validate && validate.validate.phonenumber) ? 'd-block' : 'd-none'}`} >
+                                        {(validate.validate && validate.validate.phonenumber) ? validate.validate.phonenumber[0] : ''}
                                     </div>
                                 </div>
                                 <div className="email mb-3">
@@ -310,10 +313,29 @@ const Register = () => {
                                         </div>
                                     </div>
 
+
                                 </div>
+                                <div className="aadhar mb-3">
+                                    <input type="text"
+                                        className={`form-control ${validate.validate && validate.validate.aadhar ? 'is-invalid ' : ''}`}
+                                        id="aadhar"
+                                        name="aadhar"
+                                        value={aadhar}
+                                        placeholder="Phone Number"
+                                        onChange={(e) => setAadhar(e.target.value)}
+                                    />
+
+                                    <div className={`invalid-feedback text-start ${(validate.validate && validate.validate.aadhar) ? 'd-block' : 'd-none'}`} >
+                                        {(validate.validate && validate.validate.aadhar) ? validate.validate.aadhar[0] : ''}
+                                    </div>
+                                </div>
+
+
+                                
                                 <div className="text-center">
                                     <button type="submit" className="btn btn-primary w-100 theme-btn mx-auto" to="/login">Sign Up</button>
                                 </div>
+                                
                             </form>
 
                             <hr />
