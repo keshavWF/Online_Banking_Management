@@ -2,6 +2,7 @@ package com.banking.app.service;
 
 import com.banking.app.model.OtpEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,10 @@ public class OTPService
     // injects dependencies automatically into the spring-managed method/bean
     // automatically populates method or constructor parameter
 
+    public String getOTPByEmail(String Email){
+        final OtpEntity otpEntity = otpRepository.findById(Email).orElse(null);
+        return otpEntity != null ? otpEntity.getOtp() : "NO";
+    }
     public void sendOTPMail(String email)
     {
         String otp = generateOtp();

@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 @Entity
 public class OtpEntity {
 
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;*/
 
+    @Id
     private String email;
     private String otp;
     private LocalDateTime expiryTimestamp;
@@ -30,13 +31,13 @@ public class OtpEntity {
 
     // Getters and setters
 
-    public Long getId() {
+    /*public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
+    }*/
 
     public String getEmail() {
         return email;
