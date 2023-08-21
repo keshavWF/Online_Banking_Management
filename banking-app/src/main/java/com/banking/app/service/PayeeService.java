@@ -5,6 +5,8 @@ import com.banking.app.repository.PayeeRepository;
 import com.banking.app.service.Interfaces.IPayeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.*;
+
 
 @Service
 public class PayeeService implements IPayeeService {
@@ -38,4 +40,9 @@ public class PayeeService implements IPayeeService {
 
         return null;
     }
+
+    @Override
+	public List<Payee> getPayeesByUserName(String userName) {
+		return payeeRepository.findByPayeeDetails_UserName(userName);
+	}
 }

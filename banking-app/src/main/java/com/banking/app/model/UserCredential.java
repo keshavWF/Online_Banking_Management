@@ -64,4 +64,13 @@ public class UserCredential {
 
         this.isAdmin = isAdmin;
     }
+
+    public void setAccountList(Account account){
+        this.accounts.add(account);
+    }
+
+    public void setPayeeList(Payee payee){
+        this.payee.add(payee);
+    }
+    
 }

@@ -5,7 +5,7 @@ import com.banking.app.model.Account;
 import java.util.List;
 
 public interface IAccountService {
-	public void saveAccount(Account account);
+	public void saveAccount(Account account, String userName);
 
 	public Account getDetailsByAccountNumber(int accountNumber);
 
