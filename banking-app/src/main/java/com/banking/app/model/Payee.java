@@ -81,5 +81,9 @@ public class Payee {
     public String getUserNameByAccount() {
         return userCredential.getUserName();
     }
+
+    public void setUserCredential(UserCredential userCredential){
+        this.userCredential = userCredential;
+    }
 }
 

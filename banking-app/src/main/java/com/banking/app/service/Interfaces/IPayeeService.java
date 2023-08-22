@@ -4,7 +4,7 @@ import com.banking.app.model.Payee;
 import java.util.List;
 
 public interface IPayeeService {
-    public void savePayee(Payee payee);
+    public void savePayee(Payee payee, String userName);
 
     public Payee getPayeeDetailsByUserID(int userID);
 

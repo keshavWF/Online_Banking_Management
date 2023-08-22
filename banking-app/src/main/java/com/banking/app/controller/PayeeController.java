@@ -14,9 +14,9 @@ public class PayeeController {
     @Autowired
     private IPayeeService payeeService;
 
-    @PostMapping("/addPayee")
-    public void add(@RequestBody Payee payee) {
-        payeeService.savePayee(payee);
+    @PostMapping("/addPayee/{userName}")
+    public void add(@RequestBody Payee payee, @PathVariable String userName) {
+        payeeService.savePayee(payee, userName);
     }
 
     @GetMapping("/fetchPayee/{payeeID}")

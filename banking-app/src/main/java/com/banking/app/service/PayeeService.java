@@ -3,6 +3,7 @@ package com.banking.app.service;
 import com.banking.app.model.Payee;
 import com.banking.app.repository.PayeeRepository;
 import com.banking.app.service.Interfaces.IPayeeService;
+import com.banking.app.service.Interfaces.IUserCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -12,9 +13,12 @@ import java.util.*;
 public class PayeeService implements IPayeeService {
     @Autowired
     private PayeeRepository payeeRepository;
+    @Autowired
+    private IUserCredentialService userCredentialService;
 
     @Override
-    public void savePayee(Payee payee){
+    public void savePayee(Payee payee, String userName){
+        payee.setUserCredential(userCredentialService.getUserCredentialsByUserName(userName));
         payeeRepository.save(payee);
     }
 

@@ -22,9 +22,8 @@ public class AccountService implements IAccountService {
 
 	@Override
 	public void saveAccount(Account account, String userName) {
-		final UserCredential tempCredential = userCredentialService.getUserCredentialsByUserName(userName);
-		tempCredential.setAccountList(account);
-		userCredentialService.saveUserCredentials(tempCredential);
+		account.setUserCredential(userCredentialService.getUserCredentialsByUserName(userName));
+		accountRepository.save(account);
 	}
 
 	@Override

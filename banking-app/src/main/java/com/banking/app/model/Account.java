@@ -49,5 +49,6 @@ public class Account {
 	public void setAccountType(String accountType) {
 		this.accountType = accountType;
 	}
-	
+
+	public void setUserCredential(UserCredential userCredential) { this.userCredential = userCredential; }
 }
