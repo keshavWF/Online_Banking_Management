@@ -1,5 +1,10 @@
 import { useState } from "react";
+import { useHistory } from "react-router";
+import axios from "../../utilities/axios";
 import Form from "../../utilities/Forms";
+import Sidebar from "../Sidebar";
+
+const ADD_ACCOUNT_URL = "/account/addAccount/";
 
 // Account Number is auto-generated
 
@@ -9,7 +14,7 @@ const AccountCreation = () => {
   const [accountType, setAccountType] = useState("");
   const [aadhar, setAadhar] = useState("");
   const [validate, setValidate] = useState({});
-
+const history = useHistory();
   const validateAccountCreation = () => {
     let isValid = true;
 
@@ -34,20 +39,36 @@ const AccountCreation = () => {
     return isValid;
   };
 
-  const accountCreation = (e) => {
+  const accountCreation = async (e) => {
     e.preventDefault();
 
     const validate = validateAccountCreation();
 
-    if (validate) {
-      setAccountType({});
-      setAadhar("");
-      alert("Account created successfully");
-    }
+    // if (validate) {
+    //   setAccountType();
+    //   setAadhar("");
+    // }
+    const account_response = await axios.post(
+      ADD_ACCOUNT_URL+sessionStorage.getItem("username"),
+      JSON.stringify({ accountType: accountType }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Aloow-Headers": "Content-Type",
+          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
+        },
+        withCredentials: false,
+      }
+    );
+    console.log(account_response);
+    history.push("/dashboard");
   };
 
   return (
     <div className="row g-0 auth-wrapper">
+      <Sidebar/>
       <div className="col-12 col-md-7 col-lg-6 auth-main-col text-center">
         <div className="d-flex flex-column align-content-end">
           <div className="auth-body mx-auto">
@@ -86,7 +107,7 @@ const AccountCreation = () => {
                     type="submit"
                     className="btn btn-primary w-100 theme-btn mx-auto"
                   >
-                    Add Payee
+                    Add Account
                   </button>
                 </div>
               </form>
