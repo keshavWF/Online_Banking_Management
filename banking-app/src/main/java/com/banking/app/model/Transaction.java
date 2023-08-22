@@ -21,6 +21,7 @@ public class Transaction {
 	@Column(nullable = false)
 	private String Date;
 	private String Remarks;
-	
+
+	private int accountNumber;
 
 }

@@ -39,7 +39,7 @@ public class OTPService
     {
         String otp = generateOtp();
         OtpEntity otpEntity = new OtpEntity(email, otp, calculateExpiryTimeStamp());
-        otpRepository.save(otpEntity);// save?
+        otpRepository.save(otpEntity);
         sendMail(email, "Forgot your password? Use this OTP to reset", otp);
     }
 
