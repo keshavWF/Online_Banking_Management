@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import axios from "../../utilities/axios";
 import Form from "../../utilities/Forms";
+import Sidebar from "../Sidebar";
+
 const ADD_ACCOUNT_URL = "/account/addAccount/";
+
 // Account Number is auto-generated
 
 // userID to be pulled in from the logged in state.
@@ -65,6 +68,7 @@ const history = useHistory();
 
   return (
     <div className="row g-0 auth-wrapper">
+      <Sidebar/>
       <div className="col-12 col-md-7 col-lg-6 auth-main-col text-center">
         <div className="d-flex flex-column align-content-end">
           <div className="auth-body mx-auto">
