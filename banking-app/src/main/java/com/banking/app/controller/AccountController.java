@@ -8,6 +8,7 @@ import com.banking.app.service.Interfaces.IAccountService;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/account")
 public class AccountController {
