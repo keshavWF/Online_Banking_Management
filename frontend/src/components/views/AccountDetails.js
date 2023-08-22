@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const ACC_URL = "/getAccounts/";
+const ACC_URL = "/account/getAccount/";
 
 const BankAccount = () => {
   const [accountData, setAccountData] = useState([]);

@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useHistory } from "react-router";
+import axios from "../../utilities/axios";
 import Form from "../../utilities/Forms";
-
+const ADD_ACCOUNT_URL = "/account/addAccount/";
 // Account Number is auto-generated
 
 // userID to be pulled in from the logged in state.
@@ -9,7 +11,7 @@ const AccountCreation = () => {
   const [accountType, setAccountType] = useState("");
   const [aadhar, setAadhar] = useState("");
   const [validate, setValidate] = useState({});
-
+const history = useHistory();
   const validateAccountCreation = () => {
     let isValid = true;
 
@@ -34,16 +36,31 @@ const AccountCreation = () => {
     return isValid;
   };
 
-  const accountCreation = (e) => {
+  const accountCreation = async (e) => {
     e.preventDefault();
 
     const validate = validateAccountCreation();
 
-    if (validate) {
-      setAccountType({});
-      setAadhar("");
-      alert("Account created successfully");
-    }
+    // if (validate) {
+    //   setAccountType();
+    //   setAadhar("");
+    // }
+    const account_response = await axios.post(
+      ADD_ACCOUNT_URL+sessionStorage.getItem("username"),
+      JSON.stringify({ accountType: accountType }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Aloow-Headers": "Content-Type",
+          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
+        },
+        withCredentials: false,
+      }
+    );
+    console.log(account_response);
+    history.push("/dashboard");
   };
 
   return (
@@ -86,7 +103,7 @@ const AccountCreation = () => {
                     type="submit"
                     className="btn btn-primary w-100 theme-btn mx-auto"
                   >
-                    Add Payee
+                    Add Account
                   </button>
                 </div>
               </form>

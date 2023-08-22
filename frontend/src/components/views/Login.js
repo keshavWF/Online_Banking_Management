@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Form from "../../utilities/Forms";
 import axios from "../../utilities/axios";
-const LOGIN_URL = "/user/addUser";
+// const LOGIN_URL = "/user/addUser";
 const CAN_LOGIN_URL = "/bank/canLogin";
 const Login = () => {
   const [username, setUsername] = useState("");
