@@ -67,6 +67,8 @@ const Login = () => {
       alert("you don't have a account with us, please sign up.");
       return;
     }
+    sessionStorage.setItem("username", username);
+    sessionStorage.setItem("isLoggedin", "true");
     history.push("/dashboard");
   };
 
