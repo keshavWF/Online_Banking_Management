@@ -1,5 +1,8 @@
 import { useState } from "react";
 import Form from "../../utilities/Forms";
+import axios from "../../utilities/axios";
+import { useHistory } from "react-router";
+const ADD_PAYEE_URL = "/payee/addPayee/";
 
 const AddPayee = () => {
   const [payeeFirstName, setPayeeFirstName] = useState("");
@@ -8,6 +11,7 @@ const AddPayee = () => {
   const [payeeNickName, setPayeeNickName] = useState("");
   const [validate, setValidate] = useState({});
 
+  const history = useHistory();
   const validateAddPayee = () => {
     let isValid = true;
 
@@ -39,18 +43,35 @@ const AddPayee = () => {
     return isValid;
   };
 
-  const addPayee = (e) => {
+  const addPayee = async (e) => {
     e.preventDefault();
 
     const validate = validateAddPayee();
 
-    if (validate) {
-      setPayeeFirstName({});
-      setPayeeLastName("");
-      setPayeeAccount("");
-      setPayeeNickName("");
-      alert("Successfully Registered Payee");
-    }
+    // if (validate) {
+    //   setPayeeFirstName({});
+    //   setPayeeLastName("");
+    //   setPayeeAccount("");
+    //   setPayeeNickName("");
+    //   alert("Successfully Registered Payee");
+    // }
+    const payee_response = await axios.post(
+      ADD_PAYEE_URL+sessionStorage.getItem("username"),
+      JSON.stringify({ firstName: payeeFirstName, lastName: payeeLastName, nickName: payeeNickName, accountNumber: payeeAccount }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Aloow-Headers": "Content-Type",
+          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
+        },
+        withCredentials: false,
+      }
+    );
+    console.log(sessionStorage.getItem("username"));
+    console.log(payee_response);
+    history.push("/dashboard");
   };
 
   return (

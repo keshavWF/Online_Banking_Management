@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../utilities/axios";
 
 const ACC_URL = "/account/getAccount/";
 
@@ -19,13 +19,13 @@ const BankAccount = () => {
 
   return (
     <div className="bank-account">
-      <h2>Bank Account Information</h2>
+      <h2>Bank Account Information for {sessionStorage.getItem("username")}</h2>
       {accountData.length > 0 ? (
         accountData.map((account, index) => (
           <div key={index}>
-            <p>Name: {account.userName}</p>
+            <p>Account Number: {account.accountNumber}</p>
             <p>Account Type: {account.accountType}</p>
-            <p>Balance: ${account.balance}</p>
+            <p>Balance: ${account.accountBalance}</p>
           </div>
         ))
       ) : (
