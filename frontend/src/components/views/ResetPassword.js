@@ -13,7 +13,9 @@ const Forgot = () => {
   const history = useHistory();
   const location = useLocation();
   const receivedData = location.state?.data;
+  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
+  const v1 = PWD_REGEX.test(password);
   const checkEmail = async (e) => {
     let correctEmail = false;
     if(receivedData.key != null){
@@ -25,7 +27,8 @@ const Forgot = () => {
   };
 
   const handleSubmit = async (e) => {
-    const callOtpService = await axios.post(
+        if(v1){
+        const callOtpService = await axios.post(
         USER_URL ,
         JSON.stringify({ userName: receivedData.key, password: password }),
           {
@@ -41,11 +44,17 @@ const Forgot = () => {
       );
 
       console.log("password Updated!");
+      }
    };
 
   const forgotPassword = (e) => {
     e.preventDefault();
-    const isValid = checkEmail(); //validateForgotPassword();
+    let isValid = checkEmail();
+
+    if(!v1){
+       isValid=false;
+       alert("Please enter a proper password, must have a smallcase, and special character");
+    }
     if (isValid) {
       console.log(receivedData.key);
       history.push("/login");
