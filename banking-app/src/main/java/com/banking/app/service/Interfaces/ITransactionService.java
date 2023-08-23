@@ -7,4 +7,7 @@ public interface ITransactionService {
 
     public String settleTransaction(Transaction transactionDetails);
 
+    public List<Transaction> getTransactions(int accountNumber, int numberOfTransactions);
+
+    public List<Transaction> getAllTransactionsByUserName(String userName);
 }

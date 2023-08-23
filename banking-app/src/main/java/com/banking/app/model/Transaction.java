@@ -22,8 +22,12 @@ public class Transaction {
 
 	private int toAccountNumber;
 
+	public Transaction() {
+
+	}
 
 	public Transaction (String userName, double amount, String payee, String date, int fromAccountNumber, int toAccountNumber){
+		super();
 		this.userName = userName;
 		this.Amount = amount;
 		this.Payee = payee;
@@ -32,11 +36,6 @@ public class Transaction {
 		this.toAccountNumber = toAccountNumber;
 	}
 
-
-
-
-
-	// getters and setters
 
 	public int getReferenceID() {
 		return referenceID;

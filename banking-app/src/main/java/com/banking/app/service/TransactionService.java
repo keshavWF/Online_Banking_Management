@@ -8,6 +8,11 @@ import com.banking.app.service.Interfaces.ITransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 @Service
 public class TransactionService implements ITransactionService {
     @Autowired
@@ -19,23 +24,50 @@ public class TransactionService implements ITransactionService {
     @Override
     public String settleTransaction(Transaction transactionDetails) {
         transactionRepository.save(transactionDetails);
-        String toReturn = "";
-        int accountNumberPayer = transactionDetails.getPayerAccountNumber();
 
+        int accountNumberPayer = transactionDetails.getPayerAccountNumber();
         Account accountPayer = accountRepository.findByAccountNumber(accountNumberPayer);
         double amount = transactionDetails.getAmount();
-        toReturn+= "amount: " + Double.toString(amount);
+
         int accountNumberPayee = transactionDetails.getPayeeAccountNumber();
         Account accountPayee = accountRepository.findByAccountNumber(accountNumberPayee);
 
-        if (accountPayee != null && accountPayer != null) {
+        if (accountPayee != null && accountPayer != null && (accountPayer.getAccountBalance() - amount) >= 0) {
             accountPayer.setAccountBalance(accountPayer.getAccountBalance() - amount);
             accountPayee.setAccountBalance(accountPayee.getAccountBalance() + amount);
 
             accountRepository.save(accountPayee);
             accountRepository.save(accountPayer);
-            return "Transaction successful" ;//+ toReturn;
+            return "Transaction successful" ;
         }
         return "Transaction failed";
+    }
+
+    @Override
+    public List<Transaction> getTransactions(int accountNumber, int numberOfTransactions){
+
+        List<Transaction> fromAccountList = transactionRepository.findTransactionsFromAccountNumber(accountNumber);
+        List<Transaction> toAccountList = transactionRepository.findTransactionsToAccountNumber(accountNumber);
+        fromAccountList.addAll(toAccountList);
+
+        sortTransactions(fromAccountList);
+
+        List<Transaction> res = new ArrayList<>();
+
+        for(int i=fromAccountList.size()-1; i>=0 && numberOfTransactions>0 ; i--, numberOfTransactions--){
+            res.add(fromAccountList.get(i));
+        }
+
+        return res;
+    }
+
+    @Override
+    public List<Transaction> getAllTransactionsByUserName(String userName){
+        return transactionRepository.findTransactionsForUsername(userName);
+    }
+
+    private void sortTransactions(List<Transaction> transactions){
+        Comparator<Transaction> timeComparator = Comparator.comparing(Transaction::getDate);
+        Collections.sort(transactions, timeComparator);
     }
 }
