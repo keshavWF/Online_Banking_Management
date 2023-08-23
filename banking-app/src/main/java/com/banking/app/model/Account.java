@@ -51,4 +51,6 @@ public class Account {
 	}
 
 	public void setUserCredential(UserCredential userCredential) { this.userCredential = userCredential; }
+
+
 }
