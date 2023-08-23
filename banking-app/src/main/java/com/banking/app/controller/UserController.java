@@ -27,4 +27,9 @@ public class UserController {
     public void updateUserDetails(@RequestBody User user){
         userService.updateUserDetails(user);
     }
+
+    @GetMapping("/getUser/{email}")
+    public String getUserByEmail(@PathVariable String email){
+        return userService.getUserNameByEmail(email);
+    }
 }

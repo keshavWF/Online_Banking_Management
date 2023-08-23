@@ -8,4 +8,6 @@ public interface IUserService {
     public User getUserDetailsByUserName(String userName);
 
     public User updateUserDetails(User user);
+
+    public String getUserNameByEmail(String email);
 }

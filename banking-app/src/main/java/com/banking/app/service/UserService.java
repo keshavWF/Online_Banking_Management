@@ -40,4 +40,10 @@ public class UserService implements IUserService {
 
         return null;
     }
+
+    @Override
+    public String getUserNameByEmail(String email){
+        final String userName = userRepository.findUserNameByEmail(email);
+        return userName != null ? userName : "InvalidEmail";
+    }
 }

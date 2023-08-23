@@ -28,12 +28,14 @@ public class User {
     private String PhoneNumber;
     @Column
     private String Aadhar;
+    @Column
+    private String Email;
 
     public User() {
 
     }
     public User(String userName, String firstName, String secondName, String currentAddress, String gender, String dob,
-                String fatherName, String permanentAddress, String phoneNumber, String aadhar) {
+                String fatherName, String permanentAddress, String phoneNumber, String aadhar, String email) {
         super();
         this.userName = userName;
         this.firstName = firstName;
@@ -45,6 +47,7 @@ public class User {
         this.PermanentAddress = permanentAddress;
         this.PhoneNumber = phoneNumber;
         this.Aadhar = aadhar;
+        this.Email = email;
     }
 
     public String getUserName() {
@@ -103,6 +106,14 @@ public class User {
     }
     public String getAadhar() {
         return Aadhar;
+    }
+
+    public void setEmail(String email){
+        this.Email = email;
+    }
+
+    public String getEmail(){
+        return Email;
     }
     public void setAadhar(String aadhar) {
         this.Aadhar = aadhar;

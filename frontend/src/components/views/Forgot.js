@@ -1,42 +1,114 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import Form from "../../utilities/Forms";
+import { Link, useHistory } from "react-router-dom";
+import axios from "../../utilities/axios";
+const OTP_URL = "/otp/send";
+const VALIDATE_URL = "/bank/checkOTP";
+const EMAIL_URL = "/userDetails/getUser";
 
 const Forgot = () => {
   const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
   const [validate, setValidate] = useState({});
+  const [username, setUserName] = useState("");
+  const [sentEmailStatus, setSentEmailStatus] = useState(false);
 
-  const validateforgotPassword = () => {
+  const history = useHistory();
+
+  const handleSubmit = async (e) => {
+    if(email === ""){
+            alert("Enter Email Address");
+    }
+    else{
+    const callGetUserName = await axios.get(
+    EMAIL_URL + "/" + email,
+       {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
+        },
+        withCredentials: false,
+       }
+    );
+
+    if(callGetUserName.data === "InvalidEmail"){
+        alert("Unregistered Email Address");
+    }
+    else{
+        setSentEmailStatus(true);
+        setUserName(callGetUserName.data);
+        const callOtpService = await axios.post(
+            OTP_URL + "?email=" + email,
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  "Access-Control-Allow-Headers": "Content-Type",
+                  "Access-Control-Allow-Credentials": true,
+                  "Access-Control-Allow-Origin": "*",
+                  "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
+                },
+                withCredentials: false,
+              }
+          );
+          alert("Otp sent to Email Address");
+      }
+    }
+   };
+   const handleFetch = async (e) => {
+       const checkOTP = await axios.get(
+           VALIDATE_URL + "/" + email + "/" + otp,
+             {
+               headers: {
+                 "Content-Type": "application/json",
+                 "Access-Control-Allow-Headers": "Content-Type",
+                 "Access-Control-Allow-Credentials": true,
+                 "Access-Control-Allow-Origin": "*",
+                 "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
+               },
+               withCredentials: false,
+             }
+         );
+
+       if(checkOTP.data.valueOf() === "INVALID"){
+            alert("Invalid OTP");
+       }
+       else{
+            console.log("Correct OTP!!");
+            const dataToSend = { key: username };
+            history.push({
+                pathname:"/reset-password",
+                state: {data: dataToSend}
+            });
+       }
+   };
+
+  const validateForgotPassword = () => {
     let isValid = true;
 
-    let validator = Form.validator({
-      email: {
-        value: email,
-        isRequired: true,
-        isEmail: true,
-      },
-    });
-
-    if (validator !== null) {
+    if (!email) {
       setValidate({
-        validate: validator.errors,
+        email: ["The email is required."],
       });
-
       isValid = false;
+    } else {
+      setValidate({
+        email: [],
+      });
     }
+
+    if(!sentEmailStatus) {
+        isValid = false;
+    }
+
     return isValid;
   };
 
   const forgotPassword = (e) => {
     e.preventDefault();
+    const isValid = validateForgotPassword();
 
-    const validate = validateforgotPassword();
-
-    if (validate) {
-      alert("Reset password link is sent to " + email);
-      setValidate({});
-      setEmail("");
-    }
   };
 
   return (
@@ -49,52 +121,76 @@ const Forgot = () => {
       <div className="col-12 col-md-7 col-lg-6 auth-main-col text-center">
         <div className="d-flex flex-column align-content-end">
           <div className="auth-body mx-auto">
-            <p>Forgot Password</p>
+            {/* Original auth form container */}
             <div className="auth-form-container text-start">
               <form
                 className="auth-form"
                 method="POST"
                 onSubmit={forgotPassword}
-                autoComplete={"off"}
+                autoComplete="off"
               >
+                {/* Email Input */}
                 <div className="email mb-3">
                   <input
-                    type="email"
+                      type="email"
+                      className={`form-control ${
+                        validate.validate && validate.validate.email
+                          ? "is-invalid "
+                          : ""
+                      }`}
+                      id="email"
+                      name="email"
+                      value={email}
+                      placeholder="Email"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+
+                {/* OTP Input */}
+                <div className="otp mb-3">
+                  <input
+                    type="text"
                     className={`form-control ${
-                      validate.validate && validate.validate.email
-                        ? "is-invalid "
-                        : ""
+                      validate.otp && validate.otp.length > 0 ? "is-invalid " : ""
                     }`}
-                    id="email"
-                    name="email"
-                    value={email}
-                    placeholder="Email"
-                    onChange={(e) => setEmail(e.target.value)}
+                    id="otp"
+                    name="otp"
+                    value={otp}
+                    placeholder="Enter OTP"
+                    onChange={(e) => setOtp(e.target.value)}
                   />
 
                   <div
                     className={`invalid-feedback text-start ${
-                      validate.validate && validate.validate.email
-                        ? "d-block"
-                        : "d-none"
+                      validate.otp && validate.otp.length > 0 ? "d-block" : "d-none"
                     }`}
                   >
-                    {validate.validate && validate.validate.email
-                      ? validate.validate.email[0]
-                      : ""}
+                    {validate.otp && validate.otp.length > 0 ? validate.otp[0] : ""}
                   </div>
                 </div>
+
 
                 <div className="text-center">
                   <button
                     type="submit"
                     className="btn btn-primary w-100 theme-btn mx-auto"
+                    onClick={handleSubmit}
                   >
-                    Forgot Password
+                    Send OTP
                   </button>
                 </div>
-              </form>
 
+
+               <div className="text-center mt-2">
+                    <button
+                      type="button"
+                      className="btn btn-secondary w-100 theme-btn mx-auto"
+                      onClick={handleFetch}
+                    >
+                      Verify OTP
+                    </button>
+              </div>
+              </form>
               <hr />
               <div className="auth-option text-center pt-2">
                 <Link className="text-link" to="/login">
