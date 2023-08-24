@@ -4,8 +4,9 @@ import axios from "../../utilities/axios";
 import { useHistory } from "react-router";
 const PAYEE_URL = "/payee/getPayee/";
 const ACC_URL = "/account/getAccount/";
-const PAYEE_ACC_URL = "/account/getAccount";
-
+const PAYEE_USERNAME = "/account/getUsername";
+const DATE_URL = "/transaction/currentDateTime";
+const TRANSACTION_URL = "/transaction/makeTransaction";
 // const samplePayees = [
 //   { id: 1, name: "Payee 1" },
 //   { id: 2, name: "Payee 2" },
@@ -46,40 +47,64 @@ const PaymentForm = () => {
     event.preventDefault();
 
     // Get userName from sessionStorage
+    console.log(selectedPayee);
     const fromUserName = sessionStorage.getItem("userName");
-    const res = await axios.get(
-      PAYEE_ACC_URL + "/" + selectedPayee,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Aloow-Headers": "Content-Type",
-          "Access-Control-Allow-Credentials": true,
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
-        },
-        withCredentials: false,
-      }
-    );
-    setPayeeUsername(res.data);
+    const res = await axios.get(PAYEE_USERNAME + "/" + selectedPayee, {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Aloow-Headers": "Content-Type",
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
+      },
+      withCredentials: false,
+    });
+    console.log(res.data);
+    if (res.data.valueOf() === "noAccount") {
+      setPayeeUsername(selectedPayee[0]);
+    } else {
+      setPayeeUsername(res.data);
+    }
+    const res_date = await axios.get(DATE_URL, {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Aloow-Headers": "Content-Type",
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
+      },
+      withCredentials: false,
+    });
+
+
+
     // Create the data object for POST request
     const paymentData = {
-      fromUserName,
-      toUserName: PayeeUserName,
+      userName: fromUserName,
+      Amount: amount,
+      Payee: "keshav",
+      Date: res_date.data,
+      Remarks: transactionMode,
       fromAccountNumber: selectedAccount,
-      toAccountNumber: selectedPayee,
-      amount,
-      transactionMode,
-      timestamp: new Date().toISOString(),
+      toAccountNumber: "1",
     };
-
+    console.log(paymentData);
     try {
-      // Make POST request to submit payment (replace with your API endpoint)
-      // await axios.post("your_payment_api_endpoint", paymentData);
+      const response = await axios.post(
+        TRANSACTION_URL,
+        JSON.stringify(paymentData),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Aloow-Headers": "Content-Type",
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
+          },
+          withCredentials: false,
+        }
+      );
       alert("Payment submitted successfully!");
-      // Clear form fields after successful submission
-      // setSelectedPayee("");
-      // setAmount("");
-      // setTransactionMode("");
       history.push("/dashboard");
     } catch (error) {
       console.error("Error submitting payment:", error);
@@ -101,7 +126,10 @@ const PaymentForm = () => {
           >
             <option value="">Select a payee</option>
             {payees.map((payee) => (
-              <option key={payee.payeeID} value={payee.accountNumber}>
+              <option
+                key={payee.payeeID}
+                value={payee.accountNumber}
+              >
                 {payee.nickName}
               </option>
             ))}

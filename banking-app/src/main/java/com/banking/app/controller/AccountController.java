@@ -26,6 +26,12 @@ public class AccountController {
 		return fetchedAccount;
 	}
 
+	@GetMapping("/getUsername/{accountNumber}")
+	public String fetchUsername(@PathVariable int accountNumber){
+		final String fetchedUsername = accountService.getUserNameAPI(accountNumber);
+		return fetchedUsername;
+	}
+
 	@PutMapping("/updateAccount")
 	public void updateDetails(@RequestBody Account account){
 		accountService.updateDetailsByAccountNumber(account);

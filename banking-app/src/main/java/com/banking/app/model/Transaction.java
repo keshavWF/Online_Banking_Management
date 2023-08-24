@@ -14,7 +14,6 @@ public class Transaction {
 	private double Amount;
 	@Column(nullable = false)
 	private String Payee;
-	@Column(nullable = false)
 	private String Date;
 	private String Remarks;
 

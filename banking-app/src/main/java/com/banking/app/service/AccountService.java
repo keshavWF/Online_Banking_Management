@@ -1,6 +1,5 @@
 package com.banking.app.service;
 
-import com.banking.app.model.UserCredential;
 import com.banking.app.service.Interfaces.IAccountService;
 import com.banking.app.service.Interfaces.IUserCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +30,14 @@ public class AccountService implements IAccountService {
 		return accountRepository.findById(accountNumber).orElse(null);
 	}
 
-
+	@Override
 	public String getUserNameAPI(int accountNumber)
 	{
-		Account temp = accountRepository.findByAccountNumber(accountNumber);
-		return temp.getUserName();
-
+		Account temp = accountRepository.findById(accountNumber).orElse(null);
+		if(temp != null){
+			return temp.getUserName();
+		}
+		return "noAccount";
 	}
 	@Override
 	public Account updateDetailsByAccountNumber(Account account){

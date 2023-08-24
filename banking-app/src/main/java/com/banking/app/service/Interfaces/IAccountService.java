@@ -8,7 +8,7 @@ public interface IAccountService {
 	public void saveAccount(Account account, String userName);
 
 	public Account getDetailsByAccountNumber(int accountNumber);
-
+	public String getUserNameAPI(int accountNumber);
 	public Account updateDetailsByAccountNumber(Account account);
 
 	public List<Account> getAccountsByUserName(String userName);

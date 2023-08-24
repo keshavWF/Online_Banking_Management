@@ -56,5 +56,4 @@ public class Account {
 	{
 		return userCredential.getUserName();
 	}
-
 }
