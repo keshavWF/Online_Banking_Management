@@ -52,5 +52,9 @@ public class Account {
 
 	public void setUserCredential(UserCredential userCredential) { this.userCredential = userCredential; }
 
+	public String getUserName()
+	{
+		return userCredential.getUserName();
+	}
 
 }

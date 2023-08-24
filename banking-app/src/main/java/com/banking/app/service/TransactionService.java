@@ -40,7 +40,13 @@ public class TransactionService implements ITransactionService {
             accountRepository.save(accountPayer);
             return "Transaction successful" ;
         }
-        return "Transaction failed";
+        else if(accountPayee == null)
+        {
+            accountPayer.setAccountBalance(accountPayer.getAccountBalance() - amount);
+            accountRepository.save(accountPayer);
+            return "Gya bhai paisa";
+        }
+        return "Transaction failed both accounts don't exist";
     }
 
     @Override
@@ -60,6 +66,8 @@ public class TransactionService implements ITransactionService {
 
         return res;
     }
+
+
 
     @Override
     public List<Transaction> getAllTransactionsByUserName(String userName){

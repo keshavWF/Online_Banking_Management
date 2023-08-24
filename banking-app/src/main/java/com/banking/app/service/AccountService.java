@@ -31,6 +31,13 @@ public class AccountService implements IAccountService {
 		return accountRepository.findById(accountNumber).orElse(null);
 	}
 
+
+	public String getUserNameAPI(int accountNumber)
+	{
+		Account temp = accountRepository.findByAccountNumber(accountNumber);
+		return temp.getUserName();
+
+	}
 	@Override
 	public Account updateDetailsByAccountNumber(Account account){
 		final Account accountData = accountRepository.findById(account.getAccountNumber()).orElse(null);
