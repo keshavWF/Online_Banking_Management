@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Container } from "reactstrap";
 import axios from "../../utilities/axios";
 
 const ACC_URL = "/account/getAccount/";
@@ -18,20 +19,33 @@ const BankAccount = () => {
   }, []);
 
   return (
-    <div className="bank-account">
-      <h2>Bank Account Information for {sessionStorage.getItem("username")}</h2>
-      {accountData.length > 0 ? (
-        accountData.map((account, index) => (
-          <div key={index}>
-            <p>Account Number: {account.accountNumber}</p>
-            <p>Account Type: {account.accountType}</p>
-            <p>Balance: ${account.accountBalance}</p>
-          </div>
-        ))
-      ) : (
-        <p>Loading account information...</p>
-      )}
-    </div>
+    <Container>
+      <div className="bank-account">
+        <h3>Bank Account Information for {sessionStorage.getItem("username")}</h3> <hr/>
+        {accountData.length > 0 ? (
+          accountData.map((account, index) => (
+            <div key={index} >
+              <table align="center" className="account-table">
+                <tr>
+                  <th>Account Number: </th>
+                  <td>{account.accountNumber}</td>
+                </tr>
+                <tr>
+                  <th>Account Type: </th>
+                  <td>{account.accountType}</td>
+                </tr>
+                <tr>
+                  <th>Balance: </th>
+                  <td>${account.accountBalance}</td>
+                </tr>
+              </table> <hr/>
+            </div>
+          ))
+        ) : (
+          <p>Loading account information...</p>
+        )}
+      </div>
+    </Container>
   );
 };
 
