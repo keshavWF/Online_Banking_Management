@@ -54,6 +54,6 @@ public class Account {
 
 	public String getUserName()
 	{
-		return userCredential.getUserName();
+		return userCredential.getUsername();
 	}
 }

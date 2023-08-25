@@ -1,11 +1,15 @@
 package com.banking.app.service.Interfaces;
 
+import com.banking.app.model.AuthenticationRequest;
+import com.banking.app.model.AuthenticationResponse;
+import com.banking.app.model.RegisterRequest;
 import com.banking.app.model.UserCredential;
 
 public interface IUserCredentialService {
-    public void saveUserCredentials(UserCredential userCredential);
+    public AuthenticationResponse saveUserCredentials(RegisterRequest registerRequest);
 
     public UserCredential getUserCredentialsByUserName(String userName);
 
     public UserCredential updateUserCredentials(UserCredential userCredential);
+    public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest);
 }

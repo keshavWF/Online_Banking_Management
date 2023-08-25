@@ -2,16 +2,27 @@ package com.banking.app.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
+@Data
 @Entity
+@Builder
+@AllArgsConstructor
 @Table(name = "UserCredential")
-public class UserCredential {
+public class UserCredential implements UserDetails {
     @Id
     private String userName;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "BINARY(60)")
     private String password;
 
     @Column
@@ -29,6 +40,9 @@ public class UserCredential {
                     CascadeType.DETACH, CascadeType.REFRESH})
     private List<Payee> payee;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     public UserCredential() {
 
     }
@@ -39,7 +53,8 @@ public class UserCredential {
         this.password = password;
     }
 
-    public String getUserName() {
+    @Override
+    public String getUsername() {
         return userName;
     }
 
@@ -47,8 +62,34 @@ public class UserCredential {
         this.userName = userName;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {

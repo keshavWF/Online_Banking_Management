@@ -1,20 +1,36 @@
 package com.banking.app.service;
 
-import com.banking.app.model.UserCredential;
+import com.banking.app.model.*;
 import com.banking.app.repository.CredentialRepository;
 import com.banking.app.service.Interfaces.IUserCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserCredentialService implements IUserCredentialService {
     @Autowired
     private CredentialRepository credentialRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtService jwtService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Override
-    public void saveUserCredentials(UserCredential userCredential) {
-
+    public AuthenticationResponse saveUserCredentials(RegisterRequest registerRequest) {
+        var userCredential = UserCredential.builder()
+                .userName(registerRequest.getUserName())
+                .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .role(Role.USER)
+                .build();
+        System.out.println(userCredential);
         credentialRepository.save(userCredential);
+        var jwtToken = jwtService.generateToken(userCredential);
+        return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
     @Override
@@ -25,10 +41,10 @@ public class UserCredentialService implements IUserCredentialService {
     @Override
     public UserCredential updateUserCredentials(UserCredential userCredential){
         final UserCredential credentials = credentialRepository
-                .findById(userCredential.getUserName()).orElse(null);
+                .findById(userCredential.getUsername()).orElse(null);
 
         if(credentials != null){
-            credentials.setUserName(userCredential.getUserName());
+            credentials.setUserName(userCredential.getUsername());
             credentials.setPassword(userCredential.getPassword());
             credentials.setIsAdmin(userCredential.getIsAdmin());
             credentialRepository.save(credentials);
@@ -36,5 +52,21 @@ public class UserCredentialService implements IUserCredentialService {
         }
 
         return null;
+    }
+
+    @Override
+    public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest){
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        authenticationRequest.getUserName(),
+                        authenticationRequest.getPassword()
+                )
+        );
+        var user = credentialRepository.findById(authenticationRequest.getUserName())
+                .orElseThrow();
+        System.out.println(user);
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder().token(jwtToken).build();
     }
 }

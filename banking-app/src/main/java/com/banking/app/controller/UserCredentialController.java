@@ -1,8 +1,12 @@
 package com.banking.app.controller;
 
+import com.banking.app.model.AuthenticationRequest;
+import com.banking.app.model.AuthenticationResponse;
+import com.banking.app.model.RegisterRequest;
 import com.banking.app.model.UserCredential;
 import com.banking.app.service.Interfaces.IUserCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -14,8 +18,13 @@ public class UserCredentialController {
 
     @CrossOrigin
     @PostMapping("/addUser")
-    public void add(@RequestBody UserCredential userCredential) {
-        userCredentialService.saveUserCredentials(userCredential);
+    public ResponseEntity<AuthenticationResponse> add(@RequestBody RegisterRequest registerRequest) {
+        return ResponseEntity.ok(userCredentialService.saveUserCredentials(registerRequest));
+    }
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
+        return ResponseEntity.ok(userCredentialService.authenticate(request));
     }
 
     @GetMapping("/fetchUser/{userName}")

@@ -79,7 +79,7 @@ public class Payee {
     }
 
     public String getUserNameByAccount() {
-        return userCredential.getUserName();
+        return userCredential.getUsername();
     }
 
     public void setUserCredential(UserCredential userCredential){
