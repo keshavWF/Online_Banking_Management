@@ -44,9 +44,9 @@ public class TransactionService implements ITransactionService {
         {
             accountPayer.setAccountBalance(accountPayer.getAccountBalance() - amount);
             accountRepository.save(accountPayer);
-            return "Gya bhai paisa";
+            return "Failed";
         }
-        return "Transaction failed both accounts don't exist";
+        return "Failed";
     }
 
     @Override
