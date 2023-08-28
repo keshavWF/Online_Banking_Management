@@ -1,16 +1,14 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link, useHistory } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import AccountCreation from "./AccountCreation";
 import AddPayee from "./AddPayee";
 import { Switch } from "react-router-dom/cjs/react-router-dom.min";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-} from "reactstrap";
+import { Button, Card, CardBody, CardText } from "reactstrap";
 import { Row, Col } from "reactstrap";
 import AccountDetails from "./AccountDetails";
 import TransactionForm from "./TransactionForm";
@@ -21,15 +19,11 @@ const UserDashboard = () => {
   const handleLogout = async (e) => {
     sessionStorage.clear();
     history.push("/login");
-  }
+  };
   return (
     <div className="row g-0 auth-wrapper">
       <div className="col-12 col-lg-12 auth-main-col text-center">
-        {/* <div className="d-flex flex-column align-content-flex-start">
-                    <div className="auth-body mx-auto">
-                        <h2>Bank</h2>
-                    </div>
-                </div> */}
+        
         <Router>
           <Switch>
             <Route path="/user/account-creation" component={AccountCreation} />
@@ -46,10 +40,10 @@ const UserDashboard = () => {
                   <Card style={{ width: "16rem" }}>
                     <img alt="Sample" src="https://picsum.photos/300/200" />
                     <CardBody>
-                      <CardTitle tag="h5">Account Details</CardTitle>
+                      {/* <CardTitle tag="h5">Account Details</CardTitle> */}
                       <CardText>View Existing Accounts</CardText>
                       <Link className="mb-3" to="./user/account-details">
-                        <Button>Button</Button>
+                        <Button>Account Details</Button>
                       </Link>
                     </CardBody>
                   </Card>
@@ -58,12 +52,12 @@ const UserDashboard = () => {
                   <Card style={{ width: "16rem" }}>
                     <img alt="Sample" src="https://picsum.photos/300/200" />
                     <CardBody>
-                      <CardTitle tag="h5">Create account</CardTitle>
+                      {/* <CardTitle tag="h5">Create account</CardTitle> */}
                       <CardText>
                         Create a new savings or checking account
                       </CardText>
                       <Link className="mb-3" to="/user/account-creation">
-                        <Button>Button</Button>
+                        <Button>Create account</Button>
                       </Link>
                     </CardBody>
                   </Card>
@@ -72,10 +66,10 @@ const UserDashboard = () => {
                   <Card style={{ width: "16rem" }}>
                     <img alt="Sample" src="https://picsum.photos/300/200" />
                     <CardBody>
-                      <CardTitle tag="h5">Add Payee</CardTitle>
+                      {/* <CardTitle tag="h5">Add Payee</CardTitle> */}
                       <CardText>Add New Payees</CardText>
                       <Link className="mb-3" to="/user/add-payee">
-                        <Button>Button</Button>
+                        <Button>Add Payee</Button>
                       </Link>
                     </CardBody>
                   </Card>
@@ -84,10 +78,10 @@ const UserDashboard = () => {
                   <Card style={{ width: "16rem" }}>
                     <img alt="Sample" src="https://picsum.photos/300/200" />
                     <CardBody>
-                      <CardTitle tag="h5">Send Money</CardTitle>
+                      {/* <CardTitle tag="h5">Send Money</CardTitle> */}
                       <CardText>Send Money to Added Payees</CardText>
                       <Link className="mb-3" to="/user/transaction-form">
-                        <Button>Button</Button>
+                        <Button>Send Money</Button>
                       </Link>
                     </CardBody>
                   </Card>
@@ -96,12 +90,12 @@ const UserDashboard = () => {
                   <Card style={{ width: "16rem" }}>
                     <img alt="Sample" src="https://picsum.photos/300/200" />
                     <CardBody>
-                      <CardTitle tag="h5">Recent Transactions</CardTitle>
+                      {/* <CardTitle tag="h5">Recent Transactions</CardTitle> */}
                       <CardText>
                         View your recent NEFT, RTGS and IMPS Transactions
                       </CardText>
                       <Link className="mb-3" to="/user/view-transactions">
-                        <Button>Button</Button>
+                        <Button>Recent Transactions</Button>
                       </Link>
                     </CardBody>
                   </Card>

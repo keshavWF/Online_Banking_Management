@@ -20,7 +20,7 @@ const TRANSACTION_URL = "/transaction/getTransactions/";
 //   },
 // ];
 
-const TransactionList = () => {
+const ViewTransactions = () => {
   const [transactions, setTransactions] = useState([]);
 
   // useEffect(() => {
@@ -83,4 +83,4 @@ const TransactionList = () => {
   );
 };
 
-export default TransactionList;
+export default ViewTransactions;

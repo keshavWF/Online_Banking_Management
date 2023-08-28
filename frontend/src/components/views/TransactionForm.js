@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import useState from 'react-usestateref';
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import axios from "../../utilities/axios";
 import { useHistory } from "react-router";
@@ -8,19 +9,14 @@ const ACC_URL = "/account/getAccount/";
 const PAYEE_USERNAME = "/account/getUsername";
 const DATE_URL = "/transaction/currentDateTime";
 const TRANSACTION_URL = "/transaction/makeTransaction";
-// const samplePayees = [
-//   { id: 1, name: "Payee 1" },
-//   { id: 2, name: "Payee 2" },
-//   { id: 3, name: "Payee 3" },
-// ];
 
-const PaymentForm = () => {
+const TransactionForm = () => {
   const history = useHistory();
   const [payees, setPayees] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState("");
   const [selectedPayee, setSelectedPayee] = useState([]);
-  const [PayeeUserName, setPayeeUsername] = useState("");
+  // const [PayeeUserName, setPayeeUsername] = useState("");
   const [amount, setAmount] = useState("");
   const [transactionMode, setTransactionMode] = useState("");
 
@@ -44,17 +40,11 @@ const PaymentForm = () => {
         console.error("Error fetching data:", error);
       });
   }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Get userName from sessionStorage
-    console.log(selectedPayee);
     const items = selectedPayee.split(',').map((item)=>item.trim());
-    console.log(items[0]);
-    console.log(items[1]);
-    console.log(items[2]);
-
-
     const fromUserName = sessionStorage.getItem("username");
     const res = await axios.get(PAYEE_USERNAME + "/" + items[2], {
       headers: {
@@ -66,14 +56,18 @@ const PaymentForm = () => {
       },
       withCredentials: false,
     });
-    console.log(res.data);
+    // console.log(res.data);
+    let PayeeUserName = "";
     if (res.data.valueOf() === "noAccount") {
       const pun = items[0]+" "+items[1];
-      console.log(pun);
-      setPayeeUsername(pun);
+      // console.log(pun);
+      // setPayeeUsername(pun);
+      PayeeUserName = pun;
     } else {
-      setPayeeUsername(res.data);
+      // setPayeeUsername(res.data);
+      PayeeUserName = res.data;
     }
+    
     const res_date = await axios.get(DATE_URL, {
       headers: {
         "Content-Type": "application/json",
@@ -196,4 +190,4 @@ const PaymentForm = () => {
   );
 };
 
-export default PaymentForm;
+export default TransactionForm;

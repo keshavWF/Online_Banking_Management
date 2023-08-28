@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import axios from "../../utilities/axios";
 const USER_URL = "/user/addUser";
-const EMAIL_URL = "/userDetails/getUser";
+// const EMAIL_URL = "/userDetails/getUser";
 
 const Forgot = () => {
   const [username, setUserName] = useState("");

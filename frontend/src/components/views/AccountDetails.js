@@ -4,7 +4,7 @@ import axios from "../../utilities/axios";
 
 const ACC_URL = "/account/getAccount/";
 
-const BankAccount = () => {
+const AccountDetails = () => {
   const [accountData, setAccountData] = useState([]);
 
   useEffect(() => {
@@ -61,4 +61,4 @@ const BankAccount = () => {
   );
 };
 
-export default BankAccount;
+export default AccountDetails;
