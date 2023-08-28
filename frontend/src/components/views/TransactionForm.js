@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import axios from "../../utilities/axios";
 import { useHistory } from "react-router";
+import Sidebar from "../Sidebar";
 const PAYEE_URL = "/payee/getPayee/";
 const ACC_URL = "/account/getAccount/";
 const PAYEE_USERNAME = "/account/getUsername";
@@ -114,6 +115,10 @@ const PaymentForm = () => {
 
   return (
     <div>
+      <div className="col-12 col-lg-3"> 
+        <Sidebar/>
+      </div>
+    <div className="col-12 col-lg-9">
       <h2>Make a Payment</h2>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
@@ -178,6 +183,7 @@ const PaymentForm = () => {
           Submit Payment
         </Button>
       </Form>
+    </div>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "../../utilities/Forms";
 import axios from "../../utilities/axios";
 import { useHistory } from "react-router";
+import Sidebar from "../Sidebar";
 const ADD_PAYEE_URL = "/payee/addPayee/";
 
 const AddPayee = () => {
@@ -76,7 +77,10 @@ const AddPayee = () => {
 
   return (
     <div className="row g-0 auth-wrapper">
-      <div className="col-12 col-md-7 col-lg-6 auth-main-col text-center">
+      <div className="col-12 col-lg-3">
+        <Sidebar/>
+      </div>
+      <div className="col-12 col-lg-9 auth-main-col text-center">
         <div className="d-flex flex-column align-content-end">
           <div className="auth-body mx-auto">
             <h2>Add Payee Details</h2>
