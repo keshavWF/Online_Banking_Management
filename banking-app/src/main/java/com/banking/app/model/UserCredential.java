@@ -47,10 +47,11 @@ public class UserCredential implements UserDetails {
 
     }
 
-    public UserCredential(String userName, String password) {
+    public UserCredential(String userName, String password, String isAdmin) {
         super();
         this.userName = userName;
         this.password = password;
+        this.isAdmin = isAdmin;
     }
 
     @Override

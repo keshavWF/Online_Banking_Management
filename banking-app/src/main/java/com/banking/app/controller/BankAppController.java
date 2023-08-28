@@ -2,7 +2,9 @@ package com.banking.app.controller;
 
 import com.banking.app.model.OtpEntity;
 import com.banking.app.model.UserCredential;
+import com.banking.app.repository.CredentialRepository;
 import com.banking.app.repository.OtpRepository;
+import com.banking.app.repository.UserRepository;
 import com.banking.app.service.Interfaces.IUserCredentialService;
 import com.banking.app.service.OTPService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,14 @@ public class BankAppController {
 
     @Autowired
     private IUserCredentialService userCredentialService;
-
+    @Autowired
+    private CredentialRepository credentialRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private OTPService otpService;
+    @Autowired
+    private OtpRepository otpRepository;
 
     @GetMapping("/canLogin/{userName}/{password}/{isAdmin}")
     public String canLoginUser(@PathVariable String userName, @PathVariable String password, @PathVariable String isAdmin){
@@ -40,10 +47,22 @@ public class BankAppController {
         return userCredentialService.getUserCredentialsByUserName(userName) != null ? "YES" : "NO";
     }
 
+    @PostMapping("/decline/{userName}")
+    public void declineUserRequest(@PathVariable String userName){
+        credentialRepository.deleteById(userName);
+        userRepository.deleteById(userName);
+    }
 
-
-    @Autowired
-    private OtpRepository otpRepository;
+    @PostMapping("/updateStatus/{userName}")
+    public String updateUserStatus(@PathVariable String userName){
+        final UserCredential temp = userCredentialService.getUserCredentialsByUserName(userName);
+        if(temp != null){
+            temp.setIsAdmin("true");
+            credentialRepository.save(temp);
+            return "Status Updated";
+        }
+        return "Cannot Update";
+    }
 
     @GetMapping("/checkOTP/{Email}/{OTP}")
     public String validateOTP(@PathVariable String Email, @PathVariable String OTP) {

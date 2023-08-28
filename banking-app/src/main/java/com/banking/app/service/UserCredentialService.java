@@ -27,6 +27,7 @@ public class UserCredentialService implements IUserCredentialService {
         var userCredential = UserCredential.builder()
                 .userName(registerRequest.getUserName())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .isAdmin(registerRequest.getIsAdmin())
                 .role(registerRequest.getRole() == null ? Role.USER : Role.ADMIN)
                 .build();
         //System.out.println(userCredential);

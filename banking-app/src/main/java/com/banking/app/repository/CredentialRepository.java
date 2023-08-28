@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface CredentialRepository extends JpaRepository<UserCredential, String> {
-    @Query("SELECT u.userName FROM UserCredential u WHERE u.isAdmin = :isAdmin")
+    @Query("SELECT u FROM UserCredential u WHERE u.isAdmin = :isAdmin")
     List<UserCredential> findUserNameByApproved(@Param("isAdmin") String isAdmin);
 }
