@@ -11,6 +11,8 @@ import ViewTransactions from "./components/views/ViewTransactions";
 import TransactionForm from "./components/views/TransactionForm";
 import AccountDetails from "./components/views/AccountDetails";
 
+import adminLogin from "./components/views/adminLogin";
+import AdminDashboard from "./components/views/AdminDashboard";
 const Auth = () => {
   return (
     <Router>
@@ -25,7 +27,9 @@ const Auth = () => {
         <Route path="/user/account-details" component={AccountDetails} />
         <Route path="/user/transaction-form" component={TransactionForm} />
         <Route path="/user/view-transactions" component={ViewTransactions} />
-        <Route path="/" component={Login} />
+        <Route path='/adminLogin' component={adminLogin} />
+        <Route path='/adminPage' component={AdminDashboard} />
+        <Route path='/' component={Login} />
       </Switch>
     </Router>
   );
