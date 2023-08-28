@@ -24,9 +24,13 @@ public class UserCredentialController {
         return ResponseEntity.ok(userCredentialService.saveUserCredentials(registerRequest));
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
-        return ResponseEntity.ok(userCredentialService.authenticate(request));
+    @GetMapping("/authenticate/{userName}/{password}")
+    public AuthenticationResponse authenticate(@PathVariable String userName, @PathVariable String password){
+        final AuthenticationRequest request = AuthenticationRequest.builder()
+                .userName(userName)
+                .password(password)
+                .build();
+        return userCredentialService.authenticate(request);
     }
 
     @GetMapping("/fetchUser/{userName}")

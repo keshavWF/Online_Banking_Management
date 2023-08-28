@@ -48,12 +48,14 @@ const history = useHistory();
     //   setAccountType();
     //   setAadhar("");
     // }
+    const auth = sessionStorage.getItem("token");
     const account_response = await axios.post(
       ADD_ACCOUNT_URL+sessionStorage.getItem("username"),
       JSON.stringify({ accountType: accountType }),
       {
         headers: {
           "Content-Type": "application/json",
+          "Authorization": 'Bearer ${auth}' ,
           "Access-Control-Aloow-Headers": "Content-Type",
           "Access-Control-Allow-Credentials": true,
           "Access-Control-Allow-Origin": "*",

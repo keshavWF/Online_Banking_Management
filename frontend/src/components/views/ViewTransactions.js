@@ -35,8 +35,19 @@ const TransactionList = () => {
   // }, []);
 
   useEffect(() => {
+    const auth = "Bearer " + sessionStorage.getItem("token").toString();
     axios
-      .get(TRANSACTION_URL + sessionStorage.getItem("username"))
+      .get(TRANSACTION_URL + sessionStorage.getItem("username"),
+      {headers: {
+                      "Content-Type": "application/json",
+                      "Authorization": auth,
+                      "Access-Control-Allow-Headers": "Content-Type",
+                      "Access-Control-Allow-Credentials": true,
+                      "Access-Control-Allow-Origin": "*",
+                      "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
+                    },
+                    withCredentials: false,
+                  })
       .then((response) => {
         setTransactions(response.data);
       })

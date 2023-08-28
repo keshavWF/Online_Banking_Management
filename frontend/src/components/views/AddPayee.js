@@ -56,13 +56,16 @@ const AddPayee = () => {
     //   setPayeeNickName("");
     //   alert("Successfully Registered Payee");
     // }
+    const auth = "Bearer " + sessionStorage.getItem("token").toString();
     const payee_response = await axios.post(
       ADD_PAYEE_URL+sessionStorage.getItem("username"),
+
       JSON.stringify({ firstName: payeeFirstName, lastName: payeeLastName, nickName: payeeNickName, accountNumber: payeeAccount }),
       {
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Aloow-Headers": "Content-Type",
+          "Access-Control-Allow-Headers": "Content-Type",
+          "Authorization": auth,
           "Access-Control-Allow-Credentials": true,
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, useHistory } from "react-router-dom";
 import AccountCreation from "./AccountCreation";
 import AddPayee from "./AddPayee";
 import { Switch } from "react-router-dom/cjs/react-router-dom.min";
@@ -17,6 +17,11 @@ import TransactionForm from "./TransactionForm";
 import ViewTransactions from "./ViewTransactions";
 //
 const UserDashboard = () => {
+  const history = useHistory();
+  const handleLogout = async (e) => {
+    sessionStorage.clear();
+    history.push("/login");
+  }
   return (
     <div className="row g-0 auth-wrapper">
       <div className="col-12 col-lg-12 auth-main-col text-center">
@@ -102,6 +107,9 @@ const UserDashboard = () => {
                   </Card>
                 </Col>
               </Row>
+              <Button onClick={handleLogout} className="mt-3" color="danger">
+                Logout
+              </Button>
             </div>
           </Switch>
         </Router>

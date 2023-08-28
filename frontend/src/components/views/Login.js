@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Form from "../../utilities/Forms";
 import axios from "../../utilities/axios";
-// const LOGIN_URL = "/user/addUser";
+const AUTH_URL = "/user/authenticate";
 const CAN_LOGIN_URL = "/bank/canLogin";
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -10,6 +10,7 @@ const Login = () => {
   const [remember, setRemember] = useState(false);
   const [validate, setValidate] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("null");
 
   const history = useHistory();
   const validateLogin = () => {
@@ -59,16 +60,39 @@ const Login = () => {
         withCredentials: false,
       }
     );
-    console.log(res);
-    if (res.data.valueOf() === "IncorrectPassword") {
-      alert("Incorrect user credentials");
-      return;
-    } else if (res.data.valueOf() === "UserDoesNotExists") {
+
+    const res2 = await axios.get(
+        AUTH_URL + "/" + username + "/" + password,
+        {
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Headers": "Content-Type",
+              "Access-Control-Allow-Credentials": true,
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
+            },
+            withCredentials: false,
+        }
+    ).catch(error=> {
+         if (error.response && error.response.status === 403) {
+           alert("Invalid Credentials")
+           console.log('Access forbidden. You do not have permission.');
+         } else {
+           console.log('An error occurred.');
+         }
+         return;
+    });
+
+
+    if (res.data.valueOf() === "UserDoesNotExists") {
       alert("you don't have a account with us, please sign up.");
       return;
     }
+
+    //console.log(res2.data.token);
     sessionStorage.setItem("username", username);
     sessionStorage.setItem("isLoggedin", "true");
+    sessionStorage.setItem("token", res2.data.token);
     history.push("/dashboard");
   };
 

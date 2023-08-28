@@ -25,7 +25,7 @@ public class SecurityConfiguration {
                 .disable()
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/user/**").permitAll()
+                                .requestMatchers("/user/**", "/bank/**", "/otp/**", "/userDetails/**", "/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManagement ->
