@@ -19,7 +19,7 @@ const PaymentForm = () => {
   const [payees, setPayees] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState("");
-  const [selectedPayee, setSelectedPayee] = useState("");
+  const [selectedPayee, setSelectedPayee] = useState([]);
   const [PayeeUserName, setPayeeUsername] = useState("");
   const [amount, setAmount] = useState("");
   const [transactionMode, setTransactionMode] = useState("");
@@ -49,8 +49,14 @@ const PaymentForm = () => {
 
     // Get userName from sessionStorage
     console.log(selectedPayee);
-    const fromUserName = sessionStorage.getItem("userName");
-    const res = await axios.get(PAYEE_USERNAME + "/" + selectedPayee, {
+    const items = selectedPayee.split(',').map((item)=>item.trim());
+    console.log(items[0]);
+    console.log(items[1]);
+    console.log(items[2]);
+
+
+    const fromUserName = sessionStorage.getItem("username");
+    const res = await axios.get(PAYEE_USERNAME + "/" + items[2], {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Aloow-Headers": "Content-Type",
@@ -62,7 +68,9 @@ const PaymentForm = () => {
     });
     console.log(res.data);
     if (res.data.valueOf() === "noAccount") {
-      setPayeeUsername(selectedPayee[0]);
+      const pun = items[0]+" "+items[1];
+      console.log(pun);
+      setPayeeUsername(pun);
     } else {
       setPayeeUsername(res.data);
     }
@@ -82,12 +90,12 @@ const PaymentForm = () => {
     // Create the data object for POST request
     const paymentData = {
       userName: fromUserName,
-      Amount: amount,
-      Payee: "keshav",
-      Date: res_date.data,
-      Remarks: transactionMode,
+      amount: amount,
+      payee: PayeeUserName,
+      date: res_date.data,
+      remarks: transactionMode,
       fromAccountNumber: selectedAccount,
-      toAccountNumber: "1",
+      toAccountNumber: items[2],
     };
     console.log(paymentData);
     try {
@@ -133,7 +141,7 @@ const PaymentForm = () => {
             {payees.map((payee) => (
               <option
                 key={payee.payeeID}
-                value={payee.accountNumber}
+                value={[payee.firstName, payee.lastName, payee.accountNumber]}
               >
                 {payee.nickName}
               </option>

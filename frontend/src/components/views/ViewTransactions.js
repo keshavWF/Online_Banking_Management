@@ -71,10 +71,10 @@ const TransactionList = () => {
         <tbody>
           {transactions.map((transaction) => (
             <tr key={transaction.referenceID}>
-              <td>{transaction.Payee}</td>
-              <td>{transaction.Date}</td>
-              <td>{transaction.Amount}</td>
-              <td>{transaction.Remarks}</td>
+              <td>{transaction.payee}</td>
+              <td>{transaction.date}</td>
+              <td>{transaction.amount}</td>
+              <td>{transaction.remarks}</td>
             </tr>
           ))}
         </tbody>
