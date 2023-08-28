@@ -102,6 +102,22 @@ public class UserCredential implements UserDetails {
         return isAdmin;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public List<Payee> getPayee() {
+        return payee;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
     public void setIsAdmin(String isAdmin) {
 
         this.isAdmin = isAdmin;
