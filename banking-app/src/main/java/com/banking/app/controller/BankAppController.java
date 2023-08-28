@@ -24,11 +24,12 @@ public class BankAppController {
     @Autowired
     private OTPService otpService;
 
-    @GetMapping("/canLogin/{userName}/{password}")
-    public String canLoginUser(@PathVariable String userName, @PathVariable String password){
+    @GetMapping("/canLogin/{userName}/{password}/{isAdmin}")
+    public String canLoginUser(@PathVariable String userName, @PathVariable String password, @PathVariable String isAdmin){
         final UserCredential userExists = userCredentialService.getUserCredentialsByUserName(userName);
+
         if(userExists != null){
-            return userExists.getPassword().contentEquals(password) ? "YES" : "IncorrectPassword";
+            return userExists.getRole().toString().equals(isAdmin) ? "YES" : "IncorrectCredentials";
         }
 
         return "UserDoesNotExists";

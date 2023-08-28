@@ -9,6 +9,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserCredentialService implements IUserCredentialService {
     @Autowired
@@ -25,9 +27,9 @@ public class UserCredentialService implements IUserCredentialService {
         var userCredential = UserCredential.builder()
                 .userName(registerRequest.getUserName())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .role(Role.USER)
+                .role(registerRequest.getRole() == null ? Role.USER : Role.ADMIN)
                 .build();
-        System.out.println(userCredential);
+        //System.out.println(userCredential);
         credentialRepository.save(userCredential);
         var jwtToken = jwtService.generateToken(userCredential);
         return AuthenticationResponse.builder().token(jwtToken).build();
@@ -65,8 +67,13 @@ public class UserCredentialService implements IUserCredentialService {
         );
         var user = credentialRepository.findById(authenticationRequest.getUserName())
                 .orElseThrow();
-        System.out.println(user);
+        //System.out.println(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
+    }
+
+    @Override
+    public List<UserCredential> getUnapprovedUserList(){
+        return credentialRepository.findUserNameByApproved("false");
     }
 }

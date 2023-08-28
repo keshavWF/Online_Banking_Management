@@ -12,6 +12,11 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("null");
 
+  const [selectedRole, setSelectedRole] = useState("USER");
+  const toggleRole = () => {
+      setSelectedRole((prevRole) => (prevRole === "USER" ? "ADMIN" : "USER"));
+  };
+
   const history = useHistory();
   const validateLogin = () => {
     let isValid = true;
@@ -46,13 +51,14 @@ const Login = () => {
     console.log(
       JSON.stringify({ userName: username, password: password, isAdmin: "No" })
     );
-
+    //console.log(selectedRole);
+    //console.log(CAN_LOGIN_URL + "/" + username + "/" + password + "/" + selectedRole,);
     const res = await axios.get(
-      CAN_LOGIN_URL + "/" + username + "/" + password,
+      CAN_LOGIN_URL + "/" + username + "/" + password + "/" + selectedRole,
       {
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Aloow-Headers": "Content-Type",
+          "Access-Control-Allow-Headers": "Content-Type",
           "Access-Control-Allow-Credentials": true,
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
@@ -60,6 +66,10 @@ const Login = () => {
         withCredentials: false,
       }
     );
+    if (res.data.valueOf() === "IncorrectCredentials") {
+          alert("IncorrectCredentials");
+          return;
+    }
 
     const res2 = await axios.get(
         AUTH_URL + "/" + username + "/" + password,
@@ -93,7 +103,13 @@ const Login = () => {
     sessionStorage.setItem("username", username);
     sessionStorage.setItem("isLoggedin", "true");
     sessionStorage.setItem("token", res2.data.token);
-    history.push("/dashboard");
+    sessionStorage.setItem("role", setSelectedRole);
+
+    console.log(selectedRole.valueOf() === "USER");
+    if(selectedRole.valueOf() === "USER")
+        history.push("/dashboard");
+    else
+        history.push("/adminPage");
   };
 
   const togglePassword = (e) => {
@@ -189,6 +205,15 @@ const Login = () => {
                         ? validate.validate.password[0]
                         : ""}
                     </div>
+                    <div className="mb-3">
+                            <button
+                              type="button"
+                              className="btn btn-outline-primary btn-sm"
+                              onClick={toggleRole} // Attach toggle function to button click
+                            >
+                              {selectedRole === "USER" ? "USER" : "ADMIN"}
+                            </button>
+                          </div>
                   </div>
 
                   <div className="extra mt-3 row justify-content-between">
@@ -230,6 +255,13 @@ const Login = () => {
                   Sign up{" "}
                 </Link>
               </div>
+              <hr />
+                <div className="auth-option text-center pt-2">
+                  For Admin:{" "}
+                  <Link className="text-link" to="/adminLogin">
+                    Admin Register{" "}
+                  </Link>
+                </div>
             </div>
           </div>
         </div>

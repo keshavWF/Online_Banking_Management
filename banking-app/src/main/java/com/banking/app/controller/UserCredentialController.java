@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.persistence.NoResultException;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/user")
@@ -47,5 +49,10 @@ public class UserCredentialController {
     @PutMapping("/updateUser")
     public void updateUserDetails(@RequestBody UserCredential userCredential){
         userCredentialService.updateUserCredentials(userCredential);
+    }
+
+    @GetMapping("/unapproved")
+    public List<UserCredential> getUsersPendingApproval(){
+        return userCredentialService.getUnapprovedUserList();
     }
 }
