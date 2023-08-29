@@ -6,6 +6,9 @@ import com.banking.app.repository.CredentialRepository;
 import com.banking.app.repository.OtpRepository;
 import com.banking.app.repository.UserRepository;
 import com.banking.app.service.Interfaces.IUserCredentialService;
+
+import io.micrometer.common.lang.Nullable;
+
 import com.banking.app.service.OTPService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +46,7 @@ public class BankAppController {
     }
 
     @GetMapping("/exists/{userName}")
-    public String userNameAlreadyExists(@PathVariable String userName){
+    public String userNameAlreadyExists(@PathVariable @Nullable String userName){
         return userCredentialService.getUserCredentialsByUserName(userName) != null ? "YES" : "NO";
     }
 

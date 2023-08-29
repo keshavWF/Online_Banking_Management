@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.banking.app.model.Payee;
+import com.banking.app.model.UserCredential;
 import com.banking.app.repository.PayeeRepository;
 import com.banking.app.service.Interfaces.IUserCredentialService;
 
@@ -25,6 +26,8 @@ public class PayeeServiceTest {
 
     @Mock
     private IUserCredentialService userCredentialService;
+    @Mock
+    private UserCredential userCredential;
 
     @InjectMocks
     private PayeeService payeeService;
@@ -38,7 +41,7 @@ public class PayeeServiceTest {
     void testSavePayee() {
         // Create a mock Payee and mock user credentials
         Payee mockPayee = new Payee();
-        when(userCredentialService.getUserCredentialsByUserName(anyString())).thenReturn(/* mock user credentials */);
+        when(userCredentialService.getUserCredentialsByUserName(anyString())).thenReturn(userCredential);
 
         // Call the method to be tested
         payeeService.savePayee(mockPayee, "testUser");

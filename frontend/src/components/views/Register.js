@@ -64,32 +64,16 @@ const Register = () => {
 
     const validate = validateRegister();
 
-    // if (validate) {
-    //     setValidate({});
-    //     setFirstName('');
-    //     setLastName('');
-    //     setEmail('');
-    //     setPassword('');
-    //     setCurrentAddress('');
-    //     setDob('');
-    //     setFatherName('');
-    //     setGender('');
-    //     setPermanentAddress('');
-    //     setPhoneNumber();
-    //     setUsername('');
-    //     setAadhar();
-    //     // alert('Successfully Register User');
-    // }
     const v2 = PWD_REGEX.test(password);
     if (!v2) {
-      console.log(
-        "Please enter a proper password, must have a smallcase, and special character"
+      alert(
+        "Please enter a proper password, must have a smallcase, uppercase, numerical, and special character"
       );
       return;
     }
     console.log(checkUsername);
     if (!checkUsername) {
-      console.log("PLease enter a unique username");
+      alert("Username already exists. Please enter a unique username");
       return;
     }
     console.log(
@@ -148,31 +132,33 @@ const Register = () => {
         withCredentials: false,
       }
     );
-    console.log(credential_response);
     history.push("/login");
   };
   const uniqueUsername = async (e) => {
-    setUsername(e);
+    if(e != ""){
+      setUsername(e);
+      const resp = await axios.get(USERNAME_URL + "/" + e, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Aloow-Headers": "Content-Type",
+          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
+        },
+        withCredentials: false,
+      });
 
-    const resp = await axios.get(USERNAME_URL + "/" + e, {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Aloow-Headers": "Content-Type",
-        "Access-Control-Allow-Credentials": true,
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
-      },
-      withCredentials: false,
-    });
-
-    const res = resp.data;
-    console.log(res.valueOf());
-    if (res.valueOf() === "NO") {
-      setCheckUsername(true);
-    } else {
+      const res = resp.data;
+      if (res.valueOf() === "NO") {
+        setCheckUsername(true);
+      } else {
+        setCheckUsername(false);
+      }
+    }
+    else{
+      setUsername(e);
       setCheckUsername(false);
     }
-    console.log(checkUsername);
   };
   const togglePassword = (e) => {
     if (showPassword) {
@@ -182,18 +168,6 @@ const Register = () => {
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //     e.preventDefault();
-  //     const v2 = PWD_REGEX.test(password);
-  //     if (!v2 )  {
-  //       console.log("Invalid Entry");
-  //       return;
-  //     }
-  //     if(!checkUsername){
-  //         alert("PLease enter a unique username");
-  //     }
-
-  //   };
   return (
     <div className="row g-0 auth-wrapper">
       <div className="col-12 col-md-5 col-lg-6 h-100 auth-background-col">

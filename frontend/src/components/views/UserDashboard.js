@@ -38,7 +38,7 @@ const UserDashboard = () => {
               <Row>
                 <Col className=".container-fluid">
                   <Card style={{ width: "16rem" }}>
-                    <img alt="Sample" src="https://picsum.photos/300/200" />
+                    <img alt="Sample" src="https://fastly.picsum.photos/id/370/300/200.jpg?hmac=2OPcz57c8RNwGYThK48To4ueZ3XX3fDt7KdG37B7alI" />
                     <CardBody>
                       {/* <CardTitle tag="h5">Account Details</CardTitle> */}
                       <CardText>View Existing Accounts</CardText>
@@ -50,7 +50,7 @@ const UserDashboard = () => {
                 </Col>
                 <Col className=".container-fluid">
                   <Card style={{ width: "16rem" }}>
-                    <img alt="Sample" src="https://picsum.photos/300/200" />
+                    <img alt="Sample" src="https://fastly.picsum.photos/id/370/300/200.jpg?hmac=2OPcz57c8RNwGYThK48To4ueZ3XX3fDt7KdG37B7alI" />
                     <CardBody>
                       {/* <CardTitle tag="h5">Create account</CardTitle> */}
                       <CardText>
@@ -64,7 +64,7 @@ const UserDashboard = () => {
                 </Col>
                 <Col className=".container-fluid">
                   <Card style={{ width: "16rem" }}>
-                    <img alt="Sample" src="https://picsum.photos/300/200" />
+                    <img alt="Sample" src="https://fastly.picsum.photos/id/370/300/200.jpg?hmac=2OPcz57c8RNwGYThK48To4ueZ3XX3fDt7KdG37B7alI" />
                     <CardBody>
                       {/* <CardTitle tag="h5">Add Payee</CardTitle> */}
                       <CardText>Add New Payees</CardText>
@@ -76,7 +76,7 @@ const UserDashboard = () => {
                 </Col>
                 <Col className=".container-fluid">
                   <Card style={{ width: "16rem" }}>
-                    <img alt="Sample" src="https://picsum.photos/300/200" />
+                    <img alt="Sample" src="https://fastly.picsum.photos/id/370/300/200.jpg?hmac=2OPcz57c8RNwGYThK48To4ueZ3XX3fDt7KdG37B7alI" />
                     <CardBody>
                       {/* <CardTitle tag="h5">Send Money</CardTitle> */}
                       <CardText>Send Money to Added Payees</CardText>
@@ -88,7 +88,7 @@ const UserDashboard = () => {
                 </Col>
                 <Col className=".container-fluid">
                   <Card style={{ width: "16rem" }}>
-                    <img alt="Sample" src="https://picsum.photos/300/200" />
+                    <img alt="Sample" src="https://fastly.picsum.photos/id/370/300/200.jpg?hmac=2OPcz57c8RNwGYThK48To4ueZ3XX3fDt7KdG37B7alI" />
                     <CardBody>
                       {/* <CardTitle tag="h5">Recent Transactions</CardTitle> */}
                       <CardText>
