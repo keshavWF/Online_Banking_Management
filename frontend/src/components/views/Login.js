@@ -217,21 +217,8 @@ const Login = () => {
                   </div>
 
                   <div className="extra mt-3 row justify-content-between">
-                    <div className="col-6">
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          id="remember"
-                          checked={remember}
-                          onChange={(e) => setRemember(e.currentTarget.checked)}
-                        />
-                        <label className="form-check-label" htmlFor="remember">
-                          Remember me
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-6">
+                    
+                    <div className="col-8">
                       <div className="forgot-password text-end">
                         <Link to="/forgot-password">Forgot password?</Link>
                       </div>

@@ -37,7 +37,7 @@ const UserDashboard = () => {
               withCredentials: false,
             }
           );
-        if(res.data.isAdmin != null && res.data.isAdmin != false){
+        if(res.data.isAdmin != null && res.data.isAdmin != "false"){
             console.log(res.data);
             setRemember(true);
             return;
