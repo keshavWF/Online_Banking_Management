@@ -116,9 +116,6 @@ const TransactionForm = () => {
 
   return (
     <div>
-      <div className="col-12 col-lg-3"> 
-        <Sidebar/>
-      </div>
     <div className="col-12 col-lg-9">
       <h2>Make a Payment</h2>
       <Form onSubmit={handleSubmit}>

@@ -70,9 +70,6 @@ const history = useHistory();
 
   return (
     <div className="row g-0 auth-wrapper">
-      <div className="col-12 col-lg-3">
-      <Sidebar/>
-      </div>
       <div className="col-12 col-lg-9 auth-main-col text-center">
         <div className="d-flex flex-column align-content-end">
           <div className="auth-body mx-auto">
