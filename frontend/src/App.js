@@ -22,11 +22,6 @@ const Auth = () => {
         <Route path="/dashboard" component={UserDashboard} />
         <Route path="/forgot-password" component={Forgot} />
         <Route path="/reset-password" component={ResetPassword} />
-        <Route path="/user/account-creation" component={AccountCreation} />
-        <Route path="/user/add-payee" component={AddPayee} />
-        <Route path="/user/account-details" component={AccountDetails} />
-        <Route path="/user/transaction-form" component={TransactionForm} />
-        <Route path="/user/view-transactions" component={ViewTransactions} />
         <Route path='/adminLogin' component={adminLogin} />
         <Route path='/adminPage' component={AdminDashboard} />
         <Route path='/' component={Login} />

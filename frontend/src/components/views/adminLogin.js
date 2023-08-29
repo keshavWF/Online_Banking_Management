@@ -16,7 +16,7 @@ const AdminLogin = () => {
 
     try {
       const response = await axios.post(ADMIN_REG_URL,
-      JSON.stringify({ userName: adminUsername, password: adminPassword, role: sessionStorage.getItem("role") }),
+      JSON.stringify({ userName: adminUsername, password: adminPassword, role: "ADMIN" }),
      {
        headers: {
          "Content-Type": "application/json",
