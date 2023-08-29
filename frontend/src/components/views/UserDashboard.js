@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -13,9 +13,43 @@ import { Row, Col } from "reactstrap";
 import AccountDetails from "./AccountDetails";
 import TransactionForm from "./TransactionForm";
 import ViewTransactions from "./ViewTransactions";
-//
+import axios from "../../utilities/axios";
+const USER_URL = "/user/fetchUser/";
+
 const UserDashboard = () => {
-  const history = useHistory();
+    const [remember, setRemember] = useState(false);
+    const history = useHistory();
+    useEffect(() => {
+        handle();
+        return;// Call your function here
+      }, []);
+    const handle= async (e) => {
+    const res = await axios.get(
+            USER_URL + sessionStorage.getItem("username") ,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Credentials": true,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, OPTIONS, PUT, DELETE",
+              },
+              withCredentials: false,
+            }
+          );
+        if(res.data.isAdmin != null && res.data.isAdmin != false){
+            console.log(res.data);
+            setRemember(true);
+            return;
+        }
+        if(remember === false){
+            alert("Account disabled/deactivated");
+            history.push("/login");
+            return;
+         }
+    };
+
+
   const handleLogout = async (e) => {
     sessionStorage.clear();
     history.push("/login");

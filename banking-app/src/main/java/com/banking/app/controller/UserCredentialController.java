@@ -36,14 +36,8 @@ public class UserCredentialController {
     }
 
     @GetMapping("/fetchUser/{userName}")
-    public ResponseEntity<Object> fetchDetails(@PathVariable String userName){
-        try {
-            final UserCredential fetchedUser = userCredentialService.getUserCredentialsByUserName(userName);
-            return ResponseEntity.ok(fetchedUser);
-        }
-        catch (NoResultException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+    public UserCredential fetchDetails(@PathVariable String userName){
+        return userCredentialService.getUserCredentialsByUserName(userName);
     }
 
     @PutMapping("/updateUser")
