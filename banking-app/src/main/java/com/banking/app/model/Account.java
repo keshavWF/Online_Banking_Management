@@ -19,6 +19,10 @@ public class Account {
 	@JoinColumn(name = "userName")
 	private UserCredential userCredential;
 
+	public void setAccountNumber(int accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+
 	public Account() {
 
 	}
